@@ -1,0 +1,7 @@
+C:\Users\simon\OneDrive\Desktop\SAA\Lab1\Task. 5\bin\Debug\Task. 5.exe.config
+C:\Users\simon\OneDrive\Desktop\SAA\Lab1\Task. 5\bin\Debug\Task. 5.exe
+C:\Users\simon\OneDrive\Desktop\SAA\Lab1\Task. 5\bin\Debug\Task. 5.pdb
+C:\Users\simon\OneDrive\Desktop\SAA\Lab1\Task. 5\obj\Debug\Task. 5.csproj.AssemblyReference.cache
+C:\Users\simon\OneDrive\Desktop\SAA\Lab1\Task. 5\obj\Debug\Task. 5.csproj.CoreCompileInputs.cache
+C:\Users\simon\OneDrive\Desktop\SAA\Lab1\Task. 5\obj\Debug\Task. 5.exe
+C:\Users\simon\OneDrive\Desktop\SAA\Lab1\Task. 5\obj\Debug\Task. 5.pdb
