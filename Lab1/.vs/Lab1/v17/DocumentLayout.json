@@ -3,6 +3,10 @@
   "WorkspaceRootPath": "C:\\Users\\simon\\OneDrive\\Desktop\\SAA\\Lab1\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{040E4109-9CDC-40D1-AB24-DA47A82BD86E}|Task.4\\Task.4.csproj|c:\\users\\simon\\onedrive\\desktop\\saa\\lab1\\task.4\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{040E4109-9CDC-40D1-AB24-DA47A82BD86E}|Task.4\\Task.4.csproj|solutionrelative:task.4\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{79A9642F-572E-494C-A065-20902B62F9F1}|Task.3\\Task.3.csproj|c:\\users\\simon\\onedrive\\desktop\\saa\\lab1\\task.3\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{79A9642F-572E-494C-A065-20902B62F9F1}|Task.3\\Task.3.csproj|solutionrelative:task.3\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
@@ -20,11 +24,24 @@
               "$type": "Document",
               "DocumentIndex": 0,
               "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\simon\\OneDrive\\Desktop\\SAA\\Lab1\\Task.4\\Program.cs",
+              "RelativeDocumentMoniker": "Task.4\\Program.cs",
+              "ToolTip": "C:\\Users\\simon\\OneDrive\\Desktop\\SAA\\Lab1\\Task.4\\Program.cs",
+              "RelativeToolTip": "Task.4\\Program.cs",
+              "ViewState": "AgIAABoAAAAAAAAAAAAAACQAAAAxAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-14T11:08:32.086Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\simon\\OneDrive\\Desktop\\SAA\\Lab1\\Task.3\\Program.cs",
               "RelativeDocumentMoniker": "Task.3\\Program.cs",
               "ToolTip": "C:\\Users\\simon\\OneDrive\\Desktop\\SAA\\Lab1\\Task.3\\Program.cs",
               "RelativeToolTip": "Task.3\\Program.cs",
-              "ViewState": "AgIAABcAAAAAAAAAAAAAAB8AAAAZAAAAAAAAAA==",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAAAoAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-10-14T10:53:15.265Z",
               "EditorCaption": ""
