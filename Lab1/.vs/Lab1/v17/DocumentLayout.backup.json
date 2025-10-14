@@ -1,9 +1,13 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\simon\\source\\repos\\Lab1\\",
+  "WorkspaceRootPath": "C:\\Users\\simon\\OneDrive\\Desktop\\SAA\\Lab1\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{4C7E651D-614D-4EC9-875B-7D78CEFC66E4}|Lab1\\Lab1.csproj|c:\\users\\simon\\source\\repos\\lab1\\lab1\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{D092B9AF-A511-413F-BA0A-AC067812AFC0}|Task.2\\Task.2.csproj|c:\\users\\simon\\onedrive\\desktop\\saa\\lab1\\task.2\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D092B9AF-A511-413F-BA0A-AC067812AFC0}|Task.2\\Task.2.csproj|solutionrelative:task.2\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4C7E651D-614D-4EC9-875B-7D78CEFC66E4}|Lab1\\Lab1.csproj|c:\\users\\simon\\onedrive\\desktop\\saa\\lab1\\lab1\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{4C7E651D-614D-4EC9-875B-7D78CEFC66E4}|Lab1\\Lab1.csproj|solutionrelative:lab1\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
@@ -20,11 +24,24 @@
               "$type": "Document",
               "DocumentIndex": 0,
               "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\simon\\source\\repos\\Lab1\\Lab1\\Program.cs",
+              "DocumentMoniker": "C:\\Users\\simon\\OneDrive\\Desktop\\SAA\\Lab1\\Task.2\\Program.cs",
+              "RelativeDocumentMoniker": "Task.2\\Program.cs",
+              "ToolTip": "C:\\Users\\simon\\OneDrive\\Desktop\\SAA\\Lab1\\Task.2\\Program.cs*",
+              "RelativeToolTip": "Task.2\\Program.cs*",
+              "ViewState": "AgIAABIAAAAAAAAAAAAAACIAAAAaAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-14T10:39:16.526Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\simon\\OneDrive\\Desktop\\SAA\\Lab1\\Lab1\\Program.cs",
               "RelativeDocumentMoniker": "Lab1\\Program.cs",
-              "ToolTip": "C:\\Users\\simon\\source\\repos\\Lab1\\Lab1\\Program.cs*",
-              "RelativeToolTip": "Lab1\\Program.cs*",
-              "ViewState": "AgIAAB4AAAAAAAAAAAAAACoAAAABAAAAAAAAAA==",
+              "ToolTip": "C:\\Users\\simon\\OneDrive\\Desktop\\SAA\\Lab1\\Lab1\\Program.cs",
+              "RelativeToolTip": "Lab1\\Program.cs",
+              "ViewState": "AgIAAB4AAAAAAAAAAAAAACsAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-10-14T10:26:23.758Z",
               "EditorCaption": ""
