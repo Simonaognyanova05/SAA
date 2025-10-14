@@ -1,0 +1,7 @@
+C:\Users\simon\OneDrive\Desktop\SAA\Lab1\Task.3\bin\Debug\Task.3.exe.config
+C:\Users\simon\OneDrive\Desktop\SAA\Lab1\Task.3\bin\Debug\Task.3.exe
+C:\Users\simon\OneDrive\Desktop\SAA\Lab1\Task.3\bin\Debug\Task.3.pdb
+C:\Users\simon\OneDrive\Desktop\SAA\Lab1\Task.3\obj\Debug\Task.3.csproj.AssemblyReference.cache
+C:\Users\simon\OneDrive\Desktop\SAA\Lab1\Task.3\obj\Debug\Task.3.csproj.CoreCompileInputs.cache
+C:\Users\simon\OneDrive\Desktop\SAA\Lab1\Task.3\obj\Debug\Task.3.exe
+C:\Users\simon\OneDrive\Desktop\SAA\Lab1\Task.3\obj\Debug\Task.3.pdb
