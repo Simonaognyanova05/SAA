@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace Crawler
 {
@@ -18,7 +15,7 @@ namespace Crawler
             stack.Push(root);
 
             int i = 0;
-            string buffer = "";
+            StringBuilder buffer = new StringBuilder();
 
             while (i < html.Length)
             {
@@ -26,10 +23,10 @@ namespace Crawler
 
                 if (c == '<')
                 {
-                    if (buffer.Trim() != "")
+                    if (buffer.Length > 0 && buffer.ToString().Trim() != "")
                     {
-                        stack.Peek().InnerText += buffer;
-                        buffer = "";
+                        stack.Peek().InnerText += buffer.ToString();
+                        buffer.Clear();
                     }
 
                     bool closing = false;
@@ -41,50 +38,88 @@ namespace Crawler
                         i++;
                     }
 
-                    string tag = "";
+                    StringBuilder tagBuilder = new StringBuilder();
                     while (i < html.Length && html[i] != '>' && html[i] != ' ' && html[i] != '/')
                     {
-                        tag += html[i];
+                        tagBuilder.Append(html[i]);
                         i++;
                     }
 
-                    bool inQuotes = false;
-                    bool selfClosing = false;
-
-                    while (i < html.Length)
-                    {
-                        char ch = html[i];
-                        if (ch == '"') inQuotes = !inQuotes;
-                        if (!inQuotes)
-                        {
-                            if (ch == '/')
-                                selfClosing = true;
-                            if (ch == '>')
-                            {
-                                i++;
-                                break;
-                            }
-                        }
-                        i++;
-                    }
+                    string tag = tagBuilder.ToString().Trim();
 
                     if (closing)
                     {
-                        HtmlNode current = stack.Pop();
-                        if (current.TagName != tag)
+                        HtmlNode closed = stack.Pop();
+                        if (closed.TagName != tag)
                             throw new Exception("HTML грешка: несъответстващ таг </" + tag + ">");
+                        while (i < html.Length && html[i] != '>') i++;
+                        i++;
+                        continue;
                     }
-                    else
+
+                    HtmlNode node = new HtmlNode(tag);
+                    Dictionary<string, string> attrs = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+
+                    while (i < html.Length && html[i] != '>')
                     {
-                        HtmlNode node = new HtmlNode(tag, selfClosing);
-                        stack.Peek().AddChild(node);
-                        if (!selfClosing)
-                            stack.Push(node);
+                        while (i < html.Length && html[i] == ' ') i++;
+                        if (i >= html.Length || html[i] == '>' || html[i] == '/') break;
+
+                        StringBuilder name = new StringBuilder();
+                        while (i < html.Length && html[i] != '=' && html[i] != '>' && html[i] != ' ')
+                        {
+                            name.Append(html[i]);
+                            i++;
+                        }
+
+                        string attrName = name.ToString().Trim();
+
+                        while (i < html.Length && (html[i] == ' ' || html[i] == '=')) i++;
+
+                        if (i < html.Length && (html[i] == '"' || html[i] == '\''))
+                        {
+                            char quote = html[i];
+                            i++;
+                            StringBuilder value = new StringBuilder();
+                            while (i < html.Length && html[i] != quote)
+                            {
+                                value.Append(html[i]);
+                                i++;
+                            }
+                            i++;
+                            attrs[attrName] = value.ToString();
+                        }
+                        else
+                        {
+                            StringBuilder value = new StringBuilder();
+                            while (i < html.Length && html[i] != ' ' && html[i] != '>')
+                            {
+                                value.Append(html[i]);
+                                i++;
+                            }
+                            attrs[attrName] = value.ToString();
+                        }
                     }
+
+                    bool selfClosing = false;
+                    while (i < html.Length && html[i] != '>')
+                    {
+                        if (html[i] == '/')
+                            selfClosing = true;
+                        i++;
+                    }
+                    i++;
+
+                    node.Attributes = attrs;
+                    node.IsSelfClosing = selfClosing || Array.Exists(SelfClosingTags, t => t == tag);
+                    stack.Peek().AddChild(node);
+
+                    if (!node.IsSelfClosing)
+                        stack.Push(node);
                 }
                 else
                 {
-                    buffer += c;
+                    buffer.Append(c);
                     i++;
                 }
             }

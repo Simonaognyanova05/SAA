@@ -43,9 +43,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CommandProccessor.cs" />
     <Compile Include="HtmlNode.cs" />
     <Compile Include="HtmlParser.cs" />
+    <Compile Include="MyDictionary.cs" />
     <Compile Include="MyStack.cs" />
+    <Compile Include="PathSearcher.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
