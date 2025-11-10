@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Diagnostics;
+using System.Text;
 
 namespace Crawler
 {
@@ -9,7 +10,7 @@ namespace Crawler
     {
         static void Main(string[] args)
         {
-            Console.OutputEncoding = System.Text.Encoding.UTF8;
+            Console.OutputEncoding = Encoding.UTF8;
 
             HtmlNode root = null;
             HtmlParser parser = new HtmlParser();
@@ -22,6 +23,8 @@ namespace Crawler
             Console.WriteLine(" - PRINTP <път>  → паралелно търсене");
             Console.WriteLine(" - SET <път> \"<ново съдържание>\" → промяна на възел");
             Console.WriteLine(" - COPY <източник> <цел> → копиране на възел");
+            Console.WriteLine(" - SAVE <файл>   → запис в архив (.saa)");
+            Console.WriteLine(" - LOADA <файл>  → зареждане от архив (.saa)");
             Console.WriteLine(" - exit          → изход\n");
 
             while (true)
@@ -96,6 +99,44 @@ namespace Crawler
                         Console.WriteLine("================================\n");
                     }
                 }
+                else if (cmd == "SAVE")
+                {
+                    if (root == null)
+                    {
+                        Console.WriteLine("❗ Няма зареден документ!");
+                        continue;
+                    }
+
+                    if (argument == "")
+                    {
+                        Console.WriteLine("❗ Формат: SAVE <файл>");
+                        continue;
+                    }
+
+                    string html = root.ToHtmlString();
+                    string compressed = Compress(html);
+                    File.WriteAllText(argument, compressed);
+                    Console.WriteLine($"💾 Архивът е записан успешно: {argument}");
+                }
+                else if (cmd == "LOADA")
+                {
+                    if (argument == "")
+                    {
+                        Console.WriteLine("❗ Формат: LOADA <файл>");
+                        continue;
+                    }
+
+                    if (!File.Exists(argument))
+                    {
+                        Console.WriteLine("❌ Архивът не е намерен!");
+                        continue;
+                    }
+
+                    string compressed = File.ReadAllText(argument);
+                    string html = Decompress(compressed);
+                    root = parser.Parse(html);
+                    Console.WriteLine("✅ Архивът е успешно разархивиран и зареден!");
+                }
                 else if (cmd == "PRINT" || cmd == "PRINTP" || cmd == "SET" || cmd == "COPY")
                 {
                     if (root == null)
@@ -110,10 +151,8 @@ namespace Crawler
                         continue;
                     }
 
-                    // --- Копиране ---
                     if (cmd == "COPY")
                     {
-                        // Разделяме аргументите ръчно (без Split)
                         string srcPath = "";
                         string dstPath = "";
                         bool second = false;
@@ -154,7 +193,7 @@ namespace Crawler
                         int copies = 0;
                         foreach (var src in sources)
                         {
-                            HtmlNode copy = src.ShallowCopy(); // плитко копие
+                            HtmlNode copy = src.ShallowCopy();
                             foreach (var tgt in targets)
                             {
                                 tgt.AddChild(copy);
@@ -166,7 +205,6 @@ namespace Crawler
                         continue;
                     }
 
-                    // --- SET / PRINT / PRINTP ---
                     string path = "";
                     string value = "";
                     bool inQuotes = false;
@@ -312,6 +350,74 @@ namespace Crawler
                     Console.WriteLine("❓ Непозната команда: " + cmd);
                 }
             }
+        }
+
+        static string Compress(string input)
+        {
+            if (input == null || input == "") return "";
+            StringBuilder output = new StringBuilder();
+            char prev = input[0];
+            int count = 1;
+
+            for (int i = 1; i < input.Length; i++)
+            {
+                if (input[i] == prev)
+                    count++;
+                else
+                {
+                    output.Append(prev);
+                    if (count > 1)
+                        output.Append(count);
+                    prev = input[i];
+                    count = 1;
+                }
+            }
+
+            output.Append(prev);
+            if (count > 1)
+                output.Append(count);
+            return output.ToString();
+        }
+
+        static string Decompress(string input)
+        {
+            if (input == null || input == "") return "";
+            StringBuilder output = new StringBuilder();
+            char currentChar = '\0';
+            string countStr = "";
+
+            for (int i = 0; i < input.Length; i++)
+            {
+                char c = input[i];
+                if (char.IsDigit(c))
+                {
+                    countStr += c;
+                }
+                else
+                {
+                    if (currentChar != '\0')
+                    {
+                        int count = 1;
+                        if (countStr != "")
+                            int.TryParse(countStr, out count);
+                        for (int j = 0; j < count; j++)
+                            output.Append(currentChar);
+                    }
+                    currentChar = c;
+                    countStr = "";
+                }
+            }
+
+            if (currentChar != '\0')
+            {
+                int count = 1;
+                if (countStr != "")
+                    int.TryParse(countStr, out count);
+                for (int j = 0; j < count; j++)
+                    output.Append(currentChar);
+            }
+
+            return output.ToString();
         }
 
         static bool EndsWith(string text, string end)

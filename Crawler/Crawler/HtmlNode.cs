@@ -104,28 +104,21 @@ namespace Crawler
             return attrs;
         }
 
-        // ==========================
-        // === 5. Копиране на възел ===
-        // ==========================
-
-        // Плитко копиране — споделя същите под-възли и атрибути
         public HtmlNode ShallowCopy()
         {
             HtmlNode copy = new HtmlNode(this.TagName, this.IsSelfClosing);
             copy.InnerText = this.InnerText;
-            copy.Attributes = this.Attributes;   // споделя същия речник (икономия на памет)
-            copy.FirstChild = this.FirstChild;   // сочи към същите деца
-            copy.NextSibling = null;             // не копираме връзките към братята
+            copy.Attributes = this.Attributes;  
+            copy.FirstChild = this.FirstChild;  
+            copy.NextSibling = null;            
             return copy;
         }
 
-        // Дълбоко копиране — рекурсивно копие на всички под-възли
         public HtmlNode DeepCopy()
         {
             HtmlNode copy = new HtmlNode(this.TagName, this.IsSelfClosing);
             copy.InnerText = this.InnerText;
 
-            // Копиране на атрибути
             foreach (var kv in this.Attributes)
             {
                 copy.Attributes[kv.Key] = kv.Value;
