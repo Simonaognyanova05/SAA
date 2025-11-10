@@ -21,6 +21,7 @@ namespace Crawler
             Console.WriteLine(" - PRINT <път>   → търсене по път (нормално)");
             Console.WriteLine(" - PRINTP <път>  → паралелно търсене");
             Console.WriteLine(" - SET <път> \"<ново съдържание>\" → промяна на възел");
+            Console.WriteLine(" - COPY <източник> <цел> → копиране на възел");
             Console.WriteLine(" - exit          → изход\n");
 
             while (true)
@@ -95,7 +96,7 @@ namespace Crawler
                         Console.WriteLine("================================\n");
                     }
                 }
-                else if (cmd == "PRINT" || cmd == "PRINTP" || cmd == "SET")
+                else if (cmd == "PRINT" || cmd == "PRINTP" || cmd == "SET" || cmd == "COPY")
                 {
                     if (root == null)
                     {
@@ -109,6 +110,63 @@ namespace Crawler
                         continue;
                     }
 
+                    // --- Копиране ---
+                    if (cmd == "COPY")
+                    {
+                        // Разделяме аргументите ръчно (без Split)
+                        string srcPath = "";
+                        string dstPath = "";
+                        bool second = false;
+
+                        for (int j = 0; j < argument.Length; j++)
+                        {
+                            char c = argument[j];
+                            if (c == ' ' && !second)
+                            {
+                                second = true;
+                            }
+                            else
+                            {
+                                if (!second) srcPath += c;
+                                else dstPath += c;
+                            }
+                        }
+
+                        srcPath = ManualTrim(srcPath);
+                        dstPath = ManualTrim(dstPath);
+
+                        if (srcPath == "" || dstPath == "")
+                        {
+                            Console.WriteLine("❗ Формат: COPY <източник> <цел>");
+                            continue;
+                        }
+
+                        PathSearcher searcher = new PathSearcher();
+                        List<HtmlNode> sources = searcher.Find(root, srcPath);
+                        List<HtmlNode> targets = searcher.Find(root, dstPath);
+
+                        if (sources.Count == 0 || targets.Count == 0)
+                        {
+                            Console.WriteLine("⚠ Няма намерени възли за копиране.");
+                            continue;
+                        }
+
+                        int copies = 0;
+                        foreach (var src in sources)
+                        {
+                            HtmlNode copy = src.ShallowCopy(); // плитко копие
+                            foreach (var tgt in targets)
+                            {
+                                tgt.AddChild(copy);
+                                copies++;
+                            }
+                        }
+
+                        Console.WriteLine($"✅ Копирани възли: {copies}");
+                        continue;
+                    }
+
+                    // --- SET / PRINT / PRINTP ---
                     string path = "";
                     string value = "";
                     bool inQuotes = false;
