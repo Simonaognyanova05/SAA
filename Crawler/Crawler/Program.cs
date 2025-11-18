@@ -25,6 +25,8 @@ namespace Crawler
             Console.WriteLine(" - COPY <източник> <цел> → копиране на възел");
             Console.WriteLine(" - SAVE <файл>   → запис в архив (.saa)");
             Console.WriteLine(" - LOADA <файл>  → зареждане от архив (.saa)");
+            Console.WriteLine(" - VISUALIZE  → Визуализира html в WFA");
+
             Console.WriteLine(" - exit          → изход\n");
 
             while (true)
@@ -345,6 +347,18 @@ namespace Crawler
                         Console.WriteLine($"✅ Променени възли: {changed}");
                     }
                 }
+                else if (cmd == "VISUALIZE")
+                {
+                    if (root == null)
+                    {
+                        Console.WriteLine("❗ Няма зареден документ!");
+                        continue;
+                    }
+
+                    FormHtmlRender viewer = new FormHtmlRender(root);
+                    viewer.ShowDialog();
+                }
+
                 else
                 {
                     Console.WriteLine("❓ Непозната команда: " + cmd);

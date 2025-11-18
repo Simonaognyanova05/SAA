@@ -12,3 +12,5 @@ C:\Users\simon\OneDrive\Desktop\SAA\Crawler\Crawler\obj\Debug\Crawler.pdb
 C:\Users\simon\OneDrive\Desktop\SAA\Crawler\Crawler\bin\Debug\Crawler.exe.config
 C:\Users\simon\OneDrive\Desktop\SAA\Crawler\Crawler\bin\Debug\Crawler.exe
 C:\Users\simon\OneDrive\Desktop\SAA\Crawler\Crawler\bin\Debug\Crawler.pdb
+C:\Users\simon\OneDrive\Desktop\SAA\Crawler\Crawler\obj\Debug\Crawler.FormHtmlRender.resources
+C:\Users\simon\OneDrive\Desktop\SAA\Crawler\Crawler\obj\Debug\Crawler.csproj.GenerateResource.cache

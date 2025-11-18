@@ -35,6 +35,8 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -43,6 +45,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FormHtmlRender.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormHtmlRender.Designer.cs">
+      <DependentUpon>FormHtmlRender.cs</DependentUpon>
+    </Compile>
     <Compile Include="HtmlNode.cs" />
     <Compile Include="HtmlParser.cs" />
     <Compile Include="MyStack.cs" />
@@ -54,6 +62,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="FormHtmlRender.resx">
+      <DependentUpon>FormHtmlRender.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
