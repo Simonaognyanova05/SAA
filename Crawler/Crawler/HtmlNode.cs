@@ -21,16 +21,62 @@ namespace Crawler
             Attributes = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
         }
 
+        private string ManualTrim(string s)
+        {
+            if (s == null) return "";
+
+            int start = 0;
+            int end = s.Length - 1;
+
+            while (start <= end)
+            {
+                char c = s[start];
+                if (c == ' ' || c == '\t' || c == '\r' || c == '\n')
+                    start++;
+                else break;
+            }
+
+            while (end >= start)
+            {
+                char c = s[end];
+                if (c == ' ' || c == '\t' || c == '\r' || c == '\n')
+                    end--;
+                else break;
+            }
+
+            int len = end - start + 1;
+            if (len <= 0) return "";
+
+            char[] arr = new char[len];
+            int p = 0;
+            for (int i = start; i <= end; i++)
+                arr[p++] = s[i];
+
+            return new string(arr);
+        }
+
+        private bool IsWhitespace(string s)
+        {
+            if (s == null) return true;
+            for (int i = 0; i < s.Length; i++)
+            {
+                char c = s[i];
+                if (c != ' ' && c != '\t' && c != '\r' && c != '\n')
+                    return false;
+            }
+            return true;
+        }
+
         public void AddChild(HtmlNode child)
         {
             if (FirstChild == null)
                 FirstChild = child;
             else
             {
-                HtmlNode current = FirstChild;
-                while (current.NextSibling != null)
-                    current = current.NextSibling;
-                current.NextSibling = child;
+                HtmlNode cur = FirstChild;
+                while (cur.NextSibling != null)
+                    cur = cur.NextSibling;
+                cur.NextSibling = child;
             }
             child.Parent = this;
         }
@@ -44,7 +90,8 @@ namespace Crawler
         {
             for (int i = 0; i < indent; i++)
                 Console.Write("  ");
-            Console.Write("<" + TagName + ">");
+
+            Console.Write("<" + TagName);
 
             if (Attributes.Count > 0)
             {
@@ -55,15 +102,18 @@ namespace Crawler
             }
 
             if (IsSelfClosing)
-                Console.Write(" (self-closing)");
+            {
+                Console.WriteLine(" (self-closing)>");
+                return;
+            }
 
-            Console.WriteLine();
+            Console.WriteLine(">");
 
-            if (!string.IsNullOrWhiteSpace(InnerText))
+            if (!IsWhitespace(InnerText))
             {
                 for (int i = 0; i < indent + 1; i++)
                     Console.Write("  ");
-                Console.WriteLine("Text: " + InnerText.Trim());
+                Console.WriteLine("Text: " + ManualTrim(InnerText));
             }
 
             HtmlNode child = FirstChild;
@@ -72,6 +122,10 @@ namespace Crawler
                 child.Print(indent + 1);
                 child = child.NextSibling;
             }
+
+            for (int i = 0; i < indent; i++)
+                Console.Write("  ");
+            Console.WriteLine("</" + TagName + ">");
         }
 
         public string ToHtmlString()
@@ -79,68 +133,66 @@ namespace Crawler
             if (IsSelfClosing)
                 return "<" + TagName + MakeAttrString() + " />";
 
-            string result = "<" + TagName + MakeAttrString() + ">";
+            string html = "<" + TagName + MakeAttrString() + ">";
 
-            if (!string.IsNullOrWhiteSpace(InnerText))
-                result += InnerText.Trim();
+            if (!IsWhitespace(InnerText))
+                html += ManualTrim(InnerText);
 
-            HtmlNode child = FirstChild;
-            while (child != null)
+            HtmlNode c = FirstChild;
+            while (c != null)
             {
-                result += child.ToHtmlString();
-                child = child.NextSibling;
+                html += c.ToHtmlString();
+                c = c.NextSibling;
             }
 
-            result += "</" + TagName + ">";
-            return result;
+            html += "</" + TagName + ">";
+            return html;
         }
 
         private string MakeAttrString()
         {
             if (Attributes.Count == 0) return "";
-            string attrs = "";
+            string s = "";
             foreach (var kv in Attributes)
-                attrs += $" {kv.Key}='{kv.Value}'";
-            return attrs;
+                s += $" {kv.Key}='{kv.Value}'";
+            return s;
         }
 
         public HtmlNode ShallowCopy()
         {
-            HtmlNode copy = new HtmlNode(this.TagName, this.IsSelfClosing);
-            copy.InnerText = this.InnerText;
-            copy.Attributes = this.Attributes;  
-            copy.FirstChild = this.FirstChild;  
-            copy.NextSibling = null;            
-            return copy;
+            HtmlNode c = new HtmlNode(this.TagName, this.IsSelfClosing);
+            c.InnerText = this.InnerText;
+            c.Attributes = this.Attributes; 
+            c.FirstChild = this.FirstChild; 
+            return c;
         }
 
         public HtmlNode DeepCopy()
         {
-            HtmlNode copy = new HtmlNode(this.TagName, this.IsSelfClosing);
-            copy.InnerText = this.InnerText;
+            HtmlNode c = new HtmlNode(this.TagName, this.IsSelfClosing);
+            c.InnerText = this.InnerText;
 
-            foreach (var kv in this.Attributes)
-            {
-                copy.Attributes[kv.Key] = kv.Value;
-            }
+            foreach (var kv in Attributes)
+                c.Attributes[kv.Key] = kv.Value;
 
-            HtmlNode child = this.FirstChild;
-            HtmlNode prevCopy = null;
+            HtmlNode child = FirstChild;
+            HtmlNode prev = null;
 
             while (child != null)
             {
                 HtmlNode childCopy = child.DeepCopy();
-                if (copy.FirstChild == null)
-                    copy.FirstChild = childCopy;
-                else
-                    prevCopy.NextSibling = childCopy;
 
-                childCopy.Parent = copy;
-                prevCopy = childCopy;
+                if (c.FirstChild == null)
+                    c.FirstChild = childCopy;
+                else
+                    prev.NextSibling = childCopy;
+
+                childCopy.Parent = c;
+                prev = childCopy;
                 child = child.NextSibling;
             }
 
-            return copy;
+            return c;
         }
     }
 }
