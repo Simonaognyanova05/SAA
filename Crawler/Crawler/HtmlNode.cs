@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace Crawler
 {
@@ -8,17 +7,20 @@ namespace Crawler
         public string TagName;
         public bool IsSelfClosing;
         public string InnerText;
+
         public HtmlNode FirstChild;
         public HtmlNode NextSibling;
         public HtmlNode Parent;
-        public Dictionary<string, string> Attributes;
+
+        // ✔ ЗАМЕНЕНО: вече използваме AttributeList
+        public AttributeList Attributes;
 
         public HtmlNode(string tag, bool selfClosing = false)
         {
             TagName = tag;
             IsSelfClosing = selfClosing;
             InnerText = "";
-            Attributes = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+            Attributes = new AttributeList();   // ✔ правилно
         }
 
         private string ManualTrim(string s)
@@ -28,26 +30,17 @@ namespace Crawler
             int start = 0;
             int end = s.Length - 1;
 
-            while (start <= end)
-            {
-                char c = s[start];
-                if (c == ' ' || c == '\t' || c == '\r' || c == '\n')
-                    start++;
-                else break;
-            }
+            while (start <= end &&
+                  (s[start] == ' ' || s[start] == '\t' || s[start] == '\r' || s[start] == '\n'))
+                start++;
 
-            while (end >= start)
-            {
-                char c = s[end];
-                if (c == ' ' || c == '\t' || c == '\r' || c == '\n')
-                    end--;
-                else break;
-            }
+            while (end >= start &&
+                  (s[end] == ' ' || s[end] == '\t' || s[end] == '\r' || s[end] == '\n'))
+                end--;
 
-            int len = end - start + 1;
-            if (len <= 0) return "";
+            if (end < start) return "";
 
-            char[] arr = new char[len];
+            char[] arr = new char[end - start + 1];
             int p = 0;
             for (int i = start; i <= end; i++)
                 arr[p++] = s[i];
@@ -76,14 +69,17 @@ namespace Crawler
                 HtmlNode cur = FirstChild;
                 while (cur.NextSibling != null)
                     cur = cur.NextSibling;
+
                 cur.NextSibling = child;
             }
+
             child.Parent = this;
         }
 
+        // ✔ вече работи с AttributeList
         public string GetAttribute(string name)
         {
-            return Attributes.ContainsKey(name) ? Attributes[name] : null;
+            return Attributes.Get(name);
         }
 
         public void Print(int indent = 0)
@@ -93,11 +89,16 @@ namespace Crawler
 
             Console.Write("<" + TagName);
 
-            if (Attributes.Count > 0)
+            // ✔ печат на linked-list атрибути
+            HtmlAttribute curAttr = Attributes.Head;
+            if (curAttr != null)
             {
                 Console.Write(" [");
-                foreach (var kv in Attributes)
-                    Console.Write($"{kv.Key}='{kv.Value}' ");
+                while (curAttr != null)
+                {
+                    Console.Write($"{curAttr.Name}='{curAttr.Value}' ");
+                    curAttr = curAttr.Next;
+                }
                 Console.Write("]");
             }
 
@@ -146,15 +147,21 @@ namespace Crawler
             }
 
             html += "</" + TagName + ">";
+
             return html;
         }
 
         private string MakeAttrString()
         {
-            if (Attributes.Count == 0) return "";
+            HtmlAttribute a = Attributes.Head;
+            if (a == null) return "";
+
             string s = "";
-            foreach (var kv in Attributes)
-                s += $" {kv.Key}='{kv.Value}'";
+            while (a != null)
+            {
+                s += $" {a.Name}='{a.Value}'";
+                a = a.Next;
+            }
             return s;
         }
 
@@ -162,8 +169,13 @@ namespace Crawler
         {
             HtmlNode c = new HtmlNode(this.TagName, this.IsSelfClosing);
             c.InnerText = this.InnerText;
-            c.Attributes = this.Attributes; 
-            c.FirstChild = this.FirstChild; 
+
+            // ✔ shallow copy uses original AttributeList reference
+            c.Attributes = this.Attributes;
+
+            // ✔ children are NOT copied (shallow)
+            c.FirstChild = this.FirstChild;
+
             return c;
         }
 
@@ -172,9 +184,15 @@ namespace Crawler
             HtmlNode c = new HtmlNode(this.TagName, this.IsSelfClosing);
             c.InnerText = this.InnerText;
 
-            foreach (var kv in Attributes)
-                c.Attributes[kv.Key] = kv.Value;
+            // ✔ deep copy на AttributeList
+            HtmlAttribute attr = this.Attributes.Head;
+            while (attr != null)
+            {
+                c.Attributes.Add(attr.Name, attr.Value);
+                attr = attr.Next;
+            }
 
+            // ✔ deep copy на децата
             HtmlNode child = FirstChild;
             HtmlNode prev = null;
 

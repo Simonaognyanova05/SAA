@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AttributeList.cs" />
     <Compile Include="FormHtmlRender.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -53,6 +54,7 @@
     </Compile>
     <Compile Include="HtmlNode.cs" />
     <Compile Include="HtmlParser.cs" />
+    <Compile Include="MyList.cs" />
     <Compile Include="MyStack.cs" />
     <Compile Include="PathSearcher.cs" />
     <Compile Include="PathSearcherParallel.cs" />
