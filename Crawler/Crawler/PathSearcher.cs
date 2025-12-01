@@ -1,99 +1,45 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace Crawler
 {
     public class PathSearcher
     {
-        public List<HtmlNode> Find(HtmlNode root, string path)
+        public MyList<HtmlNode> Find(HtmlNode root, string path)
         {
-            List<HtmlNode> result = new List<HtmlNode>();
+            MyList<HtmlNode> result = new MyList<HtmlNode>();
 
-            if (root == null || string.IsNullOrEmpty(path))
+            if (root == null || path == null)
                 return result;
 
-            // ---------------------------------------------------------
-            // Премахваме начално "//"
-            // ---------------------------------------------------------
+            // ignore leading //
             int start = 0;
             if (path.Length >= 2 && path[0] == '/' && path[1] == '/')
                 start = 2;
 
-            // ---------------------------------------------------------
-            // Разделяме частите по "/"
-            // ---------------------------------------------------------
-            List<string> parts = new List<string>();
-            string cur = "";
+            // parse the path manually into linked list PathPart
+            PathPart parts = ParsePath(path, start);
 
-            for (int i = start; i < path.Length; i++)
-            {
-                if (path[i] == '/')
-                {
-                    if (cur.Length > 0)
-                    {
-                        parts.Add(cur);
-                        cur = "";
-                    }
-                }
-                else
-                {
-                    cur += path[i];
-                }
-            }
-            if (cur.Length > 0) parts.Add(cur);
-
-            // ---------------------------------------------------------
-            // Започваме търсене от root
-            // ---------------------------------------------------------
-            List<HtmlNode> current = new List<HtmlNode>();
+            // current list of nodes being processed
+            MyList<HtmlNode> current = new MyList<HtmlNode>();
             current.Add(root);
 
-            // ---------------------------------------------------------
-            // Обработваме всяка част от пътя
-            // ---------------------------------------------------------
-            foreach (string part in parts)
+            PathPart part = parts;
+
+            while (part != null)
             {
-                // parse of part
-                string tag = "";
-                string attrName = "";
-                string attrValue = "";
-                int index = -1;
-                bool wildcard = false;
+                MyList<HtmlNode> next = new MyList<HtmlNode>();
 
-                ParseStep(part, out tag, out attrName, out attrValue, out index, out wildcard);
-
-                // преминаване към следващия слой
-                List<HtmlNode> next = new List<HtmlNode>();
-
-                foreach (HtmlNode n in current)
+                // iterate current nodes
+                foreach (HtmlNode node in current.ToEnumerable())
                 {
-                    HtmlNode child = n.FirstChild;
-                    int counter = 0;
+                    HtmlNode child = node.FirstChild;
+                    int sameTagCount = 0;
 
                     while (child != null)
                     {
-                        bool match = false;
-
-                        // match tag
-                        if (wildcard)
-                            match = true;
-                        else if (tag.Length > 0 && child.TagName == tag)
-                            match = true;
-
-                        // match attribute
-                        if (match && attrName.Length > 0)
+                        if (Match(child, part.Text, ref sameTagCount))
                         {
-                            string val = child.Attributes.Get(attrName);
-                            if (val == null || val != attrValue)
-                                match = false;
-                        }
-
-                        // index match
-                        if (match)
-                        {
-                            counter++;
-                            if (index == -1 || counter == index)
-                                next.Add(child);
+                            next.Add(child);
                         }
 
                         child = child.NextSibling;
@@ -101,53 +47,135 @@ namespace Crawler
                 }
 
                 current = next;
+                part = part.Next;
             }
 
             return current;
         }
 
-        // ====================================================================
-        // Разбива една стъпка от пътя: напр. div[@id='x'][3]
-        // ====================================================================
+        // ===============================================================
+        // parse path into linked list PathPart (without Split)
+        // ===============================================================
+        private PathPart ParsePath(string path, int start)
+        {
+            PathPart head = null;
+            PathPart tail = null;
+
+            string cur = "";
+
+            for (int i = start; i < path.Length; i++)
+            {
+                char c = path[i];
+
+                if (c == '/')
+                {
+                    if (cur != "")
+                    {
+                        PathPart p = new PathPart(cur);
+                        if (head == null) head = p;
+                        else tail.Next = p;
+                        tail = p;
+
+                        cur = "";
+                    }
+                }
+                else
+                {
+                    cur += c;
+                }
+            }
+
+            if (cur != "")
+            {
+                PathPart p = new PathPart(cur);
+                if (head == null) head = p;
+                else tail.Next = p;
+                tail = p;
+            }
+
+            return head;
+        }
+
+        // ===============================================================
+        // Matching logic
+        // pattern may be:
+        //  - "div"
+        //  - "p[3]"
+        //  - "table[@id='x']"
+        //  - "td[@class='x'][2]"
+        //  - "*"
+        // ===============================================================
+        private bool Match(HtmlNode node, string pattern, ref int tagCounter)
+        {
+            if (pattern == "*")
+            {
+                tagCounter++;
+                return true;
+            }
+
+            string tag = "";
+            string attrName = "";
+            string attrValue = "";
+            int index = -1;
+
+            ParseStep(pattern, out tag, out attrName, out attrValue, out index);
+
+            // tag must match
+            if (tag != "" && !EqualsIgnoreCase(node.TagName, tag))
+                return false;
+
+            // count same-tag siblings
+            tagCounter++;
+
+            // index must match
+            if (index != -1 && tagCounter != index)
+                return false;
+
+            // attribute match
+            if (attrName != "")
+            {
+                string v = node.Attributes.Get(attrName);
+                if (v == null || v != attrValue)
+                    return false;
+            }
+
+            return true;
+        }
+
+        // ===============================================================
+        // parse something like:   td[@id='x'][3]
+        // ===============================================================
         private void ParseStep(string part,
-                              out string tag,
-                              out string attrName,
-                              out string attrValue,
-                              out int index,
-                              out bool wildcard)
+                               out string tag,
+                               out string attrName,
+                               out string attrValue,
+                               out int index)
         {
             tag = "";
             attrName = "";
             attrValue = "";
             index = -1;
-            wildcard = false;
-
-            if (part == "*")
-            {
-                wildcard = true;
-                return;
-            }
 
             int i = 0;
 
-            // ---------------------- TAG ----------------------
+            // read tag
             while (i < part.Length && part[i] != '[')
             {
                 tag += part[i];
                 i++;
             }
 
-            // ---------------------- FILTERS ----------------------
+            // read filters
             while (i < part.Length)
             {
                 if (part[i] == '[')
                 {
                     i++;
 
-                    // атрибут
                     if (i < part.Length && part[i] == '@')
                     {
-                        i++; // skip @
+                        // attribute
+                        i++;
                         while (i < part.Length && part[i] != '=')
                         {
                             attrName += part[i];
@@ -155,44 +183,61 @@ namespace Crawler
                         }
 
                         i += 2; // skip ='
-
                         while (i < part.Length && part[i] != '\'')
                         {
                             attrValue += part[i];
                             i++;
                         }
-
-                        i++; // skip quote
+                        i++; // skip '
 
                         while (i < part.Length && part[i] != ']') i++;
                     }
                     else
                     {
-                        // индекс
+                        // index
                         string num = "";
                         while (i < part.Length && part[i] != ']')
                         {
                             num += part[i];
                             i++;
                         }
-
-                        int parsed = TryParseIndex(num);
-                        if (parsed > 0) index = parsed;
+                        index = ManualParseInt(num);
                     }
                 }
+
                 i++;
             }
         }
 
-        private int TryParseIndex(string s)
+        private int ManualParseInt(string s)
         {
-            int x = 0;
+            int v = 0;
             for (int i = 0; i < s.Length; i++)
             {
-                if (s[i] < '0' || s[i] > '9') return -1;
-                x = x * 10 + (s[i] - '0');
+                char c = s[i];
+                if (c < '0' || c > '9') return -1;
+                v = v * 10 + (c - '0');
             }
-            return x;
+            return v;
+        }
+
+        private bool EqualsIgnoreCase(string a, string b)
+        {
+            if (a == null || b == null) return false;
+            if (a.Length != b.Length) return false;
+
+            for (int i = 0; i < a.Length; i++)
+            {
+                char c1 = a[i];
+                char c2 = b[i];
+
+                if (c1 >= 'A' && c1 <= 'Z') c1 = (char)(c1 + 32);
+                if (c2 >= 'A' && c2 <= 'Z') c2 = (char)(c2 + 32);
+
+                if (c1 != c2) return false;
+            }
+
+            return true;
         }
     }
 }

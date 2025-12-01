@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Diagnostics;
 using System.Text;
@@ -16,18 +15,17 @@ namespace Crawler
             HtmlParser parser = new HtmlParser();
 
             Console.WriteLine("=== HTML Crawler ===");
-            Console.WriteLine("Налични команди:");
-            Console.WriteLine(" - load <файл>   → зарежда HTML файл");
-            Console.WriteLine(" - print         → показва дървото");
-            Console.WriteLine(" - PRINT <път>   → търсене по път (нормално)");
-            Console.WriteLine(" - PRINTP <път>  → паралелно търсене");
-            Console.WriteLine(" - SET <път> \"<ново съдържание>\" → промяна на възел");
-            Console.WriteLine(" - COPY <източник> <цел> → копиране на възел");
-            Console.WriteLine(" - SAVE <файл>   → запис в архив (.saa)");
-            Console.WriteLine(" - LOADA <файл>  → зареждане от архив (.saa)");
-            Console.WriteLine(" - VISUALIZE  → Визуализира html в WFA");
-
-            Console.WriteLine(" - exit          → изход\n");
+            Console.WriteLine("Команди:");
+            Console.WriteLine(" load <файл>");
+            Console.WriteLine(" print");
+            Console.WriteLine(" PRINT <път>");
+            Console.WriteLine(" PRINTP <път>");
+            Console.WriteLine(" SET <път> \"<текст>\"");
+            Console.WriteLine(" COPY <източник> <цел>");
+            Console.WriteLine(" SAVE <файл>");
+            Console.WriteLine(" LOADA <файл>");
+            Console.WriteLine(" VISUALIZE");
+            Console.WriteLine(" exit\n");
 
             while (true)
             {
@@ -36,33 +34,30 @@ namespace Crawler
                 if (command == null) continue;
 
                 string cmd = "";
-                int i = 0;
+                int k = 0;
 
-                while (i < command.Length && command[i] != ' ')
-                {
-                    cmd += command[i];
-                    i++;
-                }
+                while (k < command.Length && command[k] != ' ')
+                    cmd += command[k++];
 
-                while (i < command.Length && command[i] == ' ') i++;
+                while (k < command.Length && command[k] == ' ') k++;
 
                 string argument = "";
-                while (i < command.Length)
-                {
-                    argument += command[i];
-                    i++;
-                }
+                while (k < command.Length)
+                    argument += command[k++];
 
+                // exit
                 if (cmd == "exit")
                 {
-                    Console.WriteLine("👋 Изход от програмата...");
+                    Console.WriteLine("Изход...");
                     break;
                 }
+
+                // load file
                 else if (cmd == "load")
                 {
                     if (argument == "")
                     {
-                        Console.WriteLine("❗ Трябва да посочите име на файл!");
+                        Console.WriteLine("❗ Трябва да посочите файл!");
                         continue;
                     }
 
@@ -76,11 +71,11 @@ namespace Crawler
                         continue;
                     }
 
-                    string html = File.ReadAllText(path);
                     try
                     {
+                        string html = File.ReadAllText(path);
                         root = parser.Parse(html);
-                        Console.WriteLine("✅ Файлът е успешно зареден и парсиран!");
+                        Console.WriteLine("✅ HTML зареден!");
                     }
                     catch (Exception ex)
                     {
@@ -88,19 +83,20 @@ namespace Crawler
                         Console.WriteLine(ex.Message);
                     }
                 }
+
+                // print tree
                 else if (cmd == "print")
                 {
                     if (root == null)
                     {
                         Console.WriteLine("❗ Няма зареден документ!");
+                        continue;
                     }
-                    else
-                    {
-                        Console.WriteLine("\n=== Дървовиден модел на HTML ===");
-                        root.Print();
-                        Console.WriteLine("================================\n");
-                    }
+
+                    root.Print();
                 }
+
+                // SAVE archive
                 else if (cmd == "SAVE")
                 {
                     if (root == null)
@@ -118,8 +114,11 @@ namespace Crawler
                     string html = root.ToHtmlString();
                     string compressed = Compress(html);
                     File.WriteAllText(argument, compressed);
-                    Console.WriteLine($"💾 Архивът е записан успешно: {argument}");
+
+                    Console.WriteLine("💾 Записано!");
                 }
+
+                // LOADA archive
                 else if (cmd == "LOADA")
                 {
                     if (argument == "")
@@ -137,8 +136,11 @@ namespace Crawler
                     string compressed = File.ReadAllText(argument);
                     string html = Decompress(compressed);
                     root = parser.Parse(html);
-                    Console.WriteLine("✅ Архивът е успешно разархивиран и зареден!");
+
+                    Console.WriteLine("📂 Архивът е зареден.");
                 }
+
+                // PRINT, PRINTP, SET, COPY
                 else if (cmd == "PRINT" || cmd == "PRINTP" || cmd == "SET" || cmd == "COPY")
                 {
                     if (root == null)
@@ -149,88 +151,86 @@ namespace Crawler
 
                     if (argument == "")
                     {
-                        Console.WriteLine("❗ Моля, въведете аргументи!");
+                        Console.WriteLine("❗ Липсват аргументи!");
                         continue;
                     }
 
+                    // -------------------------
+                    // COPY <src> <dst>
+                    // -------------------------
                     if (cmd == "COPY")
                     {
-                        string srcPath = "";
-                        string dstPath = "";
+                        string src = "";
+                        string dst = "";
                         bool second = false;
 
-                        for (int j = 0; j < argument.Length; j++)
+                        for (int x = 0; x < argument.Length; x++)
                         {
-                            char c = argument[j];
+                            char c = argument[x];
                             if (c == ' ' && !second)
                             {
                                 second = true;
+                                continue;
                             }
-                            else
-                            {
-                                if (!second) srcPath += c;
-                                else dstPath += c;
-                            }
+
+                            if (!second) src += c;
+                            else dst += c;
                         }
 
-                        srcPath = ManualTrim(srcPath);
-                        dstPath = ManualTrim(dstPath);
+                        src = ManualTrim(src);
+                        dst = ManualTrim(dst);
 
-                        if (srcPath == "" || dstPath == "")
-                        {
-                            Console.WriteLine("❗ Формат: COPY <източник> <цел>");
-                            continue;
-                        }
-
-                        PathSearcher searcher = new PathSearcher();
-                        List<HtmlNode> sources = searcher.Find(root, srcPath);
-                        List<HtmlNode> targets = searcher.Find(root, dstPath);
+                        PathSearcher search = new PathSearcher();
+                        MyList<HtmlNode> sources = search.Find(root, src);
+                        MyList<HtmlNode> targets = search.Find(root, dst);
 
                         if (sources.Count == 0 || targets.Count == 0)
                         {
-                            Console.WriteLine("⚠ Няма намерени възли за копиране.");
+                            Console.WriteLine("⚠ Няма възли за копиране.");
                             continue;
                         }
 
                         int copies = 0;
-                        foreach (var src in sources)
+                        for (int i2 = 0; i2 < sources.Count; i2++)
                         {
-                            HtmlNode copy = src.ShallowCopy();
-                            foreach (var tgt in targets)
+                            HtmlNode cp = sources[i2].ShallowCopy();
+
+                            for (int j2 = 0; j2 < targets.Count; j2++)
                             {
-                                tgt.AddChild(copy);
+                                targets[j2].AddChild(cp);
                                 copies++;
                             }
                         }
 
-                        Console.WriteLine($"✅ Копирани възли: {copies}");
+                        Console.WriteLine("✔ Копирани: " + copies);
                         continue;
                     }
 
+                    // -------------------------
+                    // PRINT / PRINTP / SET
+                    // -------------------------
                     string path = "";
                     string value = "";
+                    bool foundQuotes = false;
                     bool inQuotes = false;
-                    bool foundQuote = false;
 
-                    for (int j = 0; j < argument.Length; j++)
+                    for (int x = 0; x < argument.Length; x++)
                     {
-                        char c = argument[j];
+                        char c = argument[x];
 
                         if (c == '"')
                         {
                             if (!inQuotes)
                             {
                                 inQuotes = true;
-                                foundQuote = true;
+                                foundQuotes = true;
                             }
                             else
-                            {
                                 inQuotes = false;
-                            }
                         }
                         else
                         {
-                            if (!foundQuote)
+                            if (!foundQuotes)
                                 path += c;
                             else if (inQuotes)
                                 value += c;
@@ -239,114 +239,100 @@ namespace Crawler
 
                     path = ManualTrim(path);
 
+                    // PRINT normal
                     if (cmd == "PRINT")
                     {
                         PathSearcher searcher = new PathSearcher();
                         Stopwatch sw = Stopwatch.StartNew();
-                        List<HtmlNode> found = searcher.Find(root, path);
+
+                        MyList<HtmlNode> found = searcher.Find(root, path);
+
                         sw.Stop();
 
-                        if (found.Count == 0)
-                        {
-                            Console.WriteLine("⚠ Няма намерени елементи.");
-                        }
-                        else
-                        {
-                            Console.WriteLine($"✅ Намерени елементи: {found.Count}");
-                            foreach (var node in found)
-                            {
-                                if (node.FirstChild == null && node.InnerText != "")
-                                    Console.WriteLine(node.InnerText.Trim());
-                                else
-                                    Console.WriteLine(node.ToHtmlString());
-                            }
-                        }
-                        Console.WriteLine($"⏱ Време: {sw.ElapsedMilliseconds} ms\n");
+                        PrintFoundNodes(found);
+                        Console.WriteLine("⏱ " + sw.ElapsedMilliseconds + " ms");
                     }
+
+                    // PRINT parallel
                     else if (cmd == "PRINTP")
                     {
-                        PathSearcherParallel searcher = new PathSearcherParallel();
+                        PathSearcherParallel searcherP = new PathSearcherParallel();
                         Stopwatch sw = Stopwatch.StartNew();
-                        List<HtmlNode> found = searcher.Find(root, path);
+
+                        MyList<HtmlNode> found = searcherP.Find(root, path);
+
                         sw.Stop();
 
-                        if (found.Count == 0)
-                        {
-                            Console.WriteLine("⚠ Няма намерени елементи.");
-                        }
-                        else
-                        {
-                            Console.WriteLine($"✅ Намерени елементи (паралелно): {found.Count}");
-                            foreach (var node in found)
-                            {
-                                if (node.FirstChild == null && node.InnerText != "")
-                                    Console.WriteLine(node.InnerText.Trim());
-                                else
-                                    Console.WriteLine(node.ToHtmlString());
-                            }
-                        }
-                        Console.WriteLine($"⚡ Паралелно време: {sw.ElapsedMilliseconds} ms\n");
+                        PrintFoundNodes(found);
+                        Console.WriteLine("⚡ " + sw.ElapsedMilliseconds + " ms");
                     }
+
+                    // SET
                     else if (cmd == "SET")
                     {
                         if (value == "")
                         {
-                            Console.WriteLine("❗ Формат: SET <път> \"<ново съдържание>\"");
+                            Console.WriteLine("❗ Формат: SET <път> \"<текст>\"");
                             continue;
                         }
 
-                        PathSearcher searcher = new PathSearcher();
-                        List<HtmlNode> nodes = searcher.Find(root, path);
+                        PathSearcher search = new PathSearcher();
+                        MyList<HtmlNode> nodes = search.Find(root, path);
 
                         if (nodes.Count == 0)
                         {
-                            Console.WriteLine("⚠ Няма намерени елементи по зададения път.");
+                            Console.WriteLine("⚠ Няма намерени възли.");
                             continue;
                         }
 
                         int changed = 0;
-                        HtmlParser innerParser = new HtmlParser();
 
                         for (int n = 0; n < nodes.Count; n++)
                         {
-                            HtmlNode node = nodes[n];
+                            HtmlNode nd = nodes[n];
+
                             bool hasTag = false;
                             for (int c = 0; c < value.Length; c++)
-                            {
-                                if (value[c] == '<') { hasTag = true; break; }
-                            }
+                                if (value[c] == '<') hasTag = true;
 
-                            if (hasTag)
+                            if (!hasTag)
                             {
-                                try
-                                {
-                                    HtmlNode frag = innerParser.Parse(value);
-                                    node.FirstChild = null;
-                                    node.InnerText = "";
-                                    HtmlNode ch = frag.FirstChild;
-                                    while (ch != null)
-                                    {
-                                        node.AddChild(ch);
-                                        ch = ch.NextSibling;
-                                    }
-                                    changed++;
-                                }
-                                catch
-                                {
-                                    Console.WriteLine($"⚠ Грешка при парсване на HTML за {node.TagName}");
-                                }
+                                nd.InnerText = value;
+                                nd.FirstChild = null;
+                                changed++;
                             }
                             else
                             {
-                                node.InnerText = value;
-                                node.FirstChild = null;
-                                changed++;
+                                try
+                                {
+                                    HtmlParser p2 = new HtmlParser();
+                                    HtmlNode frag = p2.Parse(value);
+
+                                    nd.FirstChild = null;
+                                    nd.InnerText = "";
+
+                                    HtmlNode ch = frag.FirstChild;
+                                    while (ch != null)
+                                    {
+                                        nd.AddChild(ch);
+                                        ch = ch.NextSibling;
+                                    }
+
+                                    changed++;
+
+                                }
+                                catch
+                                {
+                                    Console.WriteLine("⚠ Грешка в SET HTML.");
+                                }
                             }
                         }
 
-                        Console.WriteLine($"✅ Променени възли: {changed}");
+                        Console.WriteLine("✔ Променени: " + changed);
                     }
                 }
+
+                // VISUALIZE
                 else if (cmd == "VISUALIZE")
                 {
                     if (root == null)
@@ -355,21 +341,74 @@ namespace Crawler
                         continue;
                     }
 
-                    FormHtmlRender viewer = new FormHtmlRender(root);
-                    viewer.ShowDialog();
+                    FormHtmlRender f = new FormHtmlRender(root);
+                    f.ShowDialog();
                 }
 
                 else
                 {
-                    Console.WriteLine("❓ Непозната команда: " + cmd);
+                    Console.WriteLine("❓ Непозната команда!");
                 }
             }
         }
 
+        // =====================================================================
+        // HELPERS
+        // =====================================================================
+
+        static void PrintFoundNodes(MyList<HtmlNode> found)
+        {
+            if (found.Count == 0)
+            {
+                Console.WriteLine("⚠ Няма намерени.");
+                return;
+            }
+
+            Console.WriteLine("✔ Намерени: " + found.Count);
+
+            for (int i = 0; i < found.Count; i++)
+            {
+                HtmlNode n = found[i];
+
+                if (n.FirstChild == null && n.InnerText != "")
+                    Console.WriteLine(ManualTrim(n.InnerText));
+                else
+                    Console.WriteLine(n.ToHtmlString());
+            }
+        }
+
+        static bool EndsWith(string text, string end)
+        {
+            if (text.Length < end.Length) return false;
+            int s = text.Length - end.Length;
+
+            for (int i = 0; i < end.Length; i++)
+                if (text[s + i] != end[i])
+                    return false;
+
+            return true;
+        }
+
+        static string ManualTrim(string s)
+        {
+            int start = 0;
+            while (start < s.Length && s[start] == ' ') start++;
+
+            int end = s.Length - 1;
+            while (end >= 0 && s[end] == ' ') end--;
+
+            string res = "";
+            for (int i = start; i <= end; i++)
+                res += s[i];
+
+            return res;
+        }
+
         static string Compress(string input)
         {
-            if (input == null || input == "") return "";
-            StringBuilder output = new StringBuilder();
+            if (input == "" || input == null) return "";
+
+            StringBuilder sb = new StringBuilder();
             char prev = input[0];
             int count = 1;
 
@@ -379,85 +418,60 @@ namespace Crawler
                     count++;
                 else
                 {
-                    output.Append(prev);
-                    if (count > 1)
-                        output.Append(count);
+                    sb.Append(prev);
+                    if (count > 1) sb.Append(count);
                     prev = input[i];
                     count = 1;
                 }
             }
 
-            output.Append(prev);
-            if (count > 1)
-                output.Append(count);
-            return output.ToString();
+            sb.Append(prev);
+            if (count > 1) sb.Append(count);
+
+            return sb.ToString();
         }
 
         static string Decompress(string input)
         {
-            if (input == null || input == "") return "";
-            StringBuilder output = new StringBuilder();
-            char currentChar = '\0';
-            string countStr = "";
+            if (input == "" || input == null) return "";
+
+            StringBuilder sb = new StringBuilder();
+            char cur = '\0';
+            string number = "";
 
             for (int i = 0; i < input.Length; i++)
             {
                 char c = input[i];
-                if (char.IsDigit(c))
+
+                if (c >= '0' && c <= '9')
                 {
-                    countStr += c;
+                    number += c;
                 }
                 else
                 {
-                    if (currentChar != '\0')
+                    if (cur != '\0')
                     {
                         int count = 1;
-                        if (countStr != "")
-                            int.TryParse(countStr, out count);
+                        if (number != "") int.TryParse(number, out count);
+
                         for (int j = 0; j < count; j++)
-                            output.Append(currentChar);
+                            sb.Append(cur);
                     }
-                    currentChar = c;
-                    countStr = "";
+
+                    cur = c;
+                    number = "";
                 }
             }
 
-            if (currentChar != '\0')
+            if (cur != '\0')
             {
                 int count = 1;
-                if (countStr != "")
-                    int.TryParse(countStr, out count);
+                if (number != "") int.TryParse(number, out count);
                 for (int j = 0; j < count; j++)
-                    output.Append(currentChar);
+                    sb.Append(cur);
             }
 
-            return output.ToString();
-        }
-
-        static bool EndsWith(string text, string end)
-        {
-            if (text.Length < end.Length) return false;
-            int start = text.Length - end.Length;
-            for (int i = 0; i < end.Length; i++)
-            {
-                if (text[start + i] != end[i])
-                    return false;
-            }
-            return true;
-        }
-
-        static string ManualTrim(string input)
-        {
-            int start = 0;
-            while (start < input.Length && input[start] == ' ') start++;
-
-            int end = input.Length - 1;
-            while (end >= 0 && input[end] == ' ') end--;
-
-            string res = "";
-            for (int i = start; i <= end && i < input.Length; i++)
-                res += input[i];
-            return res;
+            return sb.ToString();
         }
     }
 }

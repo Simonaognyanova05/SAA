@@ -17,6 +17,12 @@ namespace Crawler
 
         private Node head;
         private Node tail;
+        private int count;
+
+        public int Count
+        {
+            get { return count; }
+        }
 
         public void Add(T value)
         {
@@ -32,9 +38,35 @@ namespace Crawler
                 tail.Next = n;
                 tail = n;
             }
+
+            count++;
         }
 
-        // Позволява обхождане с foreach
+        // Индексатор — нужен за Program.cs и PRINT/PRINTP
+        public T this[int index]
+        {
+            get
+            {
+                if (index < 0 || index >= count)
+                    throw new Exception("Index out of range");
+
+                Node cur = head;
+                int i = 0;
+
+                while (cur != null)
+                {
+                    if (i == index)
+                        return cur.Value;
+
+                    cur = cur.Next;
+                    i++;
+                }
+
+                throw new Exception("Index not found");
+            }
+        }
+
+        // foreach поддръжка
         public System.Collections.Generic.IEnumerable<T> ToEnumerable()
         {
             Node cur = head;

@@ -3,7 +3,7 @@ using System.Threading;
 
 namespace Crawler
 {
-    // Свързан списък за нишки (забранени са List<T>)
+    // ==== Linked list for threads ====
     public class ThreadNode
     {
         public Thread Value;
@@ -15,7 +15,7 @@ namespace Crawler
         }
     }
 
-    // Свързан списък за части на пътя
+    // ==== Linked list for path parts ====
     public class PathPart
     {
         public string Text;
@@ -31,69 +31,59 @@ namespace Crawler
     {
         private object locker = new object();
 
-        // =====================================================================
-        // Главна функция
-        // =====================================================================
+        // ===========================================================
+        // MAIN ENTRY
+        // ===========================================================
         public MyList<HtmlNode> Find(HtmlNode root, string path)
         {
             MyList<HtmlNode> result = new MyList<HtmlNode>();
-
             if (root == null || path == null)
                 return result;
 
-            if (path == "//")
-            {
-                result.Add(root);
-                return result;
-            }
-
-            // Премахваме начално "//"
-            int start = 0;
+            int pos = 0;
             if (path.Length >= 2 && path[0] == '/' && path[1] == '/')
-                start = 2;
+                pos = 2;
 
-            PathPart parts = ParsePath(path, start);
+            PathPart parts = ParsePath(path, pos);
 
-            SearchLevelParallel(root, parts, result);
+            // старт паралелно търсене
+            Search(root, parts, result);
 
             return result;
         }
 
-        // =====================================================================
-        // Ръчно разбиване на пътя без List, Split или IndexOf
-        // =====================================================================
-        private PathPart ParsePath(string path, int startIndex)
+        // ===========================================================
+        // Parse path into linked list (NO Split, NO arrays)
+        // ===========================================================
+        private PathPart ParsePath(string path, int start)
         {
             PathPart head = null;
             PathPart tail = null;
 
-            string current = "";
+            string curr = "";
 
-            for (int i = startIndex; i < path.Length; i++)
+            for (int i = start; i < path.Length; i++)
             {
-                char c = path[i];
-
-                if (c == '/')
+                if (path[i] == '/')
                 {
-                    if (current != "")
+                    if (curr != "")
                     {
-                        PathPart p = new PathPart(current);
+                        PathPart p = new PathPart(curr);
                         if (head == null) head = p;
                         else tail.Next = p;
                         tail = p;
-
-                        current = "";
+                        curr = "";
                     }
                 }
                 else
                 {
-                    current += c;
+                    curr += path[i];
                 }
             }
 
-            if (current != "")
+            if (curr != "")
             {
-                PathPart p = new PathPart(current);
+                PathPart p = new PathPart(curr);
                 if (head == null) head = p;
                 else tail.Next = p;
                 tail = p;
@@ -102,51 +92,57 @@ namespace Crawler
             return head;
         }
 
-        // =====================================================================
-        // Паралелно търсене на текущо ниво
-        // =====================================================================
-        private void SearchLevelParallel(HtmlNode node, PathPart part, MyList<HtmlNode> result)
+        // ===========================================================
+        // Parallel search (recursive)
+        // ===========================================================
+        private void Search(HtmlNode node, PathPart part, MyList<HtmlNode> result)
         {
             if (node == null || part == null)
                 return;
 
-            ThreadNode threadHead = null;
-            ThreadNode threadTail = null;
+            ThreadNode tHead = null;
+            ThreadNode tTail = null;
 
             HtmlNode child = node.FirstChild;
+
+            int counter = 0;
 
             while (child != null)
             {
                 HtmlNode local = child;
+                int localCount = counter + 1; // copy current index BEFORE passing
 
                 Thread t = new Thread(() =>
                 {
-                    if (Match(local, part.Text))
+                    if (Match(local, part.Text, localCount))
                     {
                         if (part.Next == null)
                         {
                             lock (locker)
+                            {
                                 result.Add(local);
+                            }
                         }
                         else
                         {
-                            SearchLevelParallel(local, part.Next, result);
+                            Search(local, part.Next, result);
                         }
                     }
                 });
 
                 ThreadNode tn = new ThreadNode(t);
-                if (threadHead == null) threadHead = tn;
-                else threadTail.Next = tn;
-                threadTail = tn;
+                if (tHead == null) tHead = tn;
+                else tTail.Next = tn;
+                tTail = tn;
 
                 t.Start();
 
+                counter++;          // increment AFTER creating the thread
                 child = child.NextSibling;
             }
 
-            // Join всички нишки чрез собствен списък
-            ThreadNode cur = threadHead;
+            // join
+            ThreadNode cur = tHead;
             while (cur != null)
             {
                 cur.Value.Join();
@@ -154,67 +150,26 @@ namespace Crawler
             }
         }
 
-        // =====================================================================
-        // Сравняване на възел с шаблон: div[@id='x'][3]
-        // =====================================================================
-        private bool Match(HtmlNode node, string pattern)
+        // ===========================================================
+        // Match node against pattern
+        // ===========================================================
+        private bool Match(HtmlNode node, string pattern, int indexPos)
         {
-            if (pattern == "*") return true;
+            if (pattern == "*")
+                return true;
 
             string tag = "";
             string attrName = "";
             string attrValue = "";
-            int index = -1;
+            int requiredIndex = -1;
 
-            int i = 0;
+            ParseStep(pattern, out tag, out attrName, out attrValue, out requiredIndex);
 
-            // прочитаме таг
-            while (i < pattern.Length && pattern[i] != '[')
-            {
-                tag += pattern[i];
-                i++;
-            }
-
-            // четем филтри
-            while (i < pattern.Length)
-            {
-                if (pattern[i] == '[')
-                {
-                    i++;
-
-                    // атрибут
-                    if (i < pattern.Length && pattern[i] == '@')
-                    {
-                        i++;
-                        while (i < pattern.Length && pattern[i] != '=')
-                            attrName += pattern[i++];
-
-                        i += 2; // ='
-
-                        while (i < pattern.Length && pattern[i] != '\'')
-                            attrValue += pattern[i++];
-
-                        i++; // '
-                    }
-                    else
-                    {
-                        // индекс
-                        string num = "";
-                        while (i < pattern.Length && pattern[i] != ']')
-                            num += pattern[i++];
-
-                        index = ManualParseInt(num);
-                    }
-                }
-
-                i++;
-            }
-
-            // проверка таг
-            if (tag != "" && node.TagName != tag)
+            // TAG
+            if (tag != "" && !EqualsIgnoreCase(node.TagName, tag))
                 return false;
 
-            // проверка атрибут
+            // ATTRIBUTE
             if (attrName != "")
             {
                 string v = node.Attributes.Get(attrName);
@@ -222,40 +177,102 @@ namespace Crawler
                     return false;
             }
 
-            // проверка индекс
-            if (index > 0)
-            {
-                HtmlNode p = node.Parent?.FirstChild;
-                int count = 0;
-
-                while (p != null)
-                {
-                    if (p.TagName == node.TagName)
-                    {
-                        count++;
-                        if (p == node)
-                            break;
-                    }
-                    p = p.NextSibling;
-                }
-
-                if (count != index)
-                    return false;
-            }
+            // INDEX
+            if (requiredIndex != -1 && requiredIndex != indexPos)
+                return false;
 
             return true;
         }
 
+        // ===========================================================
+        // Parse single step like:
+        //  td[@id='x'][3]
+        // ===========================================================
+        private void ParseStep(
+            string s,
+            out string tag,
+            out string attrName,
+            out string attrValue,
+            out int index)
+        {
+            tag = "";
+            attrName = "";
+            attrValue = "";
+            index = -1;
+
+            int i = 0;
+
+            // tag
+            while (i < s.Length && s[i] != '[')
+            {
+                tag += s[i];
+                i++;
+            }
+
+            // filters
+            while (i < s.Length)
+            {
+                if (s[i] == '[')
+                {
+                    i++;
+
+                    if (i < s.Length && s[i] == '@')
+                    {
+                        i++; // skip @
+
+                        while (i < s.Length && s[i] != '=')
+                            attrName += s[i++];
+
+                        i += 2; // skip ='
+
+                        while (i < s.Length && s[i] != '\'')
+                            attrValue += s[i++];
+
+                        i++; // skip '
+                    }
+                    else
+                    {
+                        // index
+                        string num = "";
+                        while (i < s.Length && s[i] != ']')
+                            num += s[i++];
+
+                        index = ManualParseInt(num);
+                    }
+                }
+                i++;
+            }
+        }
+
+        // ===========================================================
         private int ManualParseInt(string s)
         {
-            int x = 0;
+            int v = 0;
             for (int i = 0; i < s.Length; i++)
             {
-                char c = s[i];
-                if (c < '0' || c > '9') return -1;
-                x = x * 10 + (c - '0');
+                if (s[i] < '0' || s[i] > '9')
+                    return -1;
+                v = v * 10 + (s[i] - '0');
             }
-            return x;
+            return v;
+        }
+
+        private bool EqualsIgnoreCase(string a, string b)
+        {
+            if (a == null || b == null) return false;
+            if (a.Length != b.Length) return false;
+
+            for (int i = 0; i < a.Length; i++)
+            {
+                char c1 = a[i];
+                char c2 = b[i];
+
+                if (c1 >= 'A' && c1 <= 'Z') c1 = (char)(c1 + 32);
+                if (c2 >= 'A' && c2 <= 'Z') c2 = (char)(c2 + 32);
+
+                if (c1 != c2) return false;
+            }
+            return true;
         }
     }
 }
