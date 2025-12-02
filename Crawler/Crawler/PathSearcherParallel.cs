@@ -3,7 +3,6 @@ using System.Threading;
 
 namespace Crawler
 {
-    // ==== Linked list for threads ====
     public class ThreadNode
     {
         public Thread Value;
@@ -15,7 +14,6 @@ namespace Crawler
         }
     }
 
-    // ==== Linked list for path parts ====
     public class PathPart
     {
         public string Text;
@@ -31,9 +29,6 @@ namespace Crawler
     {
         private object locker = new object();
 
-        // ===========================================================
-        // MAIN ENTRY
-        // ===========================================================
         public MyList<HtmlNode> Find(HtmlNode root, string path)
         {
             MyList<HtmlNode> result = new MyList<HtmlNode>();
@@ -46,15 +41,11 @@ namespace Crawler
 
             PathPart parts = ParsePath(path, pos);
 
-            // старт паралелно търсене
             Search(root, parts, result);
 
             return result;
         }
 
-        // ===========================================================
-        // Parse path into linked list (NO Split, NO arrays)
-        // ===========================================================
         private PathPart ParsePath(string path, int start)
         {
             PathPart head = null;
@@ -92,9 +83,6 @@ namespace Crawler
             return head;
         }
 
-        // ===========================================================
-        // Parallel search (recursive)
-        // ===========================================================
         private void Search(HtmlNode node, PathPart part, MyList<HtmlNode> result)
         {
             if (node == null || part == null)
@@ -110,7 +98,7 @@ namespace Crawler
             while (child != null)
             {
                 HtmlNode local = child;
-                int localCount = counter + 1; // copy current index BEFORE passing
+                int localCount = counter + 1;
 
                 Thread t = new Thread(() =>
                 {
@@ -137,11 +125,10 @@ namespace Crawler
 
                 t.Start();
 
-                counter++;          // increment AFTER creating the thread
+                counter++;         
                 child = child.NextSibling;
             }
 
-            // join
             ThreadNode cur = tHead;
             while (cur != null)
             {
@@ -150,9 +137,6 @@ namespace Crawler
             }
         }
 
-        // ===========================================================
-        // Match node against pattern
-        // ===========================================================
         private bool Match(HtmlNode node, string pattern, int indexPos)
         {
             if (pattern == "*")
@@ -165,11 +149,9 @@ namespace Crawler
 
             ParseStep(pattern, out tag, out attrName, out attrValue, out requiredIndex);
 
-            // TAG
             if (tag != "" && !EqualsIgnoreCase(node.TagName, tag))
                 return false;
 
-            // ATTRIBUTE
             if (attrName != "")
             {
                 string v = node.Attributes.Get(attrName);
@@ -177,17 +159,12 @@ namespace Crawler
                     return false;
             }
 
-            // INDEX
             if (requiredIndex != -1 && requiredIndex != indexPos)
                 return false;
 
             return true;
         }
 
-        // ===========================================================
-        // Parse single step like:
-        //  td[@id='x'][3]
-        // ===========================================================
         private void ParseStep(
             string s,
             out string tag,
@@ -202,14 +179,12 @@ namespace Crawler
 
             int i = 0;
 
-            // tag
             while (i < s.Length && s[i] != '[')
             {
                 tag += s[i];
                 i++;
             }
 
-            // filters
             while (i < s.Length)
             {
                 if (s[i] == '[')
@@ -218,21 +193,20 @@ namespace Crawler
 
                     if (i < s.Length && s[i] == '@')
                     {
-                        i++; // skip @
+                        i++; 
 
                         while (i < s.Length && s[i] != '=')
                             attrName += s[i++];
 
-                        i += 2; // skip ='
+                        i += 2; 
 
                         while (i < s.Length && s[i] != '\'')
                             attrValue += s[i++];
 
-                        i++; // skip '
+                        i++; 
                     }
                     else
                     {
-                        // index
                         string num = "";
                         while (i < s.Length && s[i] != ']')
                             num += s[i++];
@@ -244,7 +218,6 @@ namespace Crawler
             }
         }
 
-        // ===========================================================
         private int ManualParseInt(string s)
         {
             int v = 0;

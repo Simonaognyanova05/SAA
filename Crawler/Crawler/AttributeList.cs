@@ -2,7 +2,6 @@
 
 namespace Crawler
 {
-    // ======== ЕДИНИЧЕН АТРИБУТ (елемент в свързан списък) ========
     public class HtmlAttribute
     {
         public string Name;
@@ -10,12 +9,10 @@ namespace Crawler
         public HtmlAttribute Next;
     }
 
-    // ======== СВЪРЗАН СПИСЪК ОТ АТРИБУТИ ========
     public class AttributeList
     {
         public HtmlAttribute Head;
 
-        // Добавяне на атрибут накрая на списъка
         public void Add(string name, string value)
         {
             HtmlAttribute a = new HtmlAttribute();
@@ -35,7 +32,6 @@ namespace Crawler
             cur.Next = a;
         }
 
-        // Вземане на атрибут по име (case-insensitive)
         public string Get(string name)
         {
             HtmlAttribute cur = Head;
@@ -59,7 +55,6 @@ namespace Crawler
                 char c1 = a[i];
                 char c2 = b[i];
 
-                // uppercase → lowercase
                 if (c1 >= 'A' && c1 <= 'Z') c1 = (char)(c1 + 32);
                 if (c2 >= 'A' && c2 <= 'Z') c2 = (char)(c2 + 32);
 

@@ -11,15 +11,12 @@ namespace Crawler
             if (root == null || path == null)
                 return result;
 
-            // ignore leading //
             int start = 0;
             if (path.Length >= 2 && path[0] == '/' && path[1] == '/')
                 start = 2;
 
-            // parse the path manually into linked list PathPart
             PathPart parts = ParsePath(path, start);
 
-            // current list of nodes being processed
             MyList<HtmlNode> current = new MyList<HtmlNode>();
             current.Add(root);
 
@@ -29,7 +26,6 @@ namespace Crawler
             {
                 MyList<HtmlNode> next = new MyList<HtmlNode>();
 
-                // iterate current nodes
                 foreach (HtmlNode node in current.ToEnumerable())
                 {
                     HtmlNode child = node.FirstChild;
@@ -53,9 +49,6 @@ namespace Crawler
             return current;
         }
 
-        // ===============================================================
-        // parse path into linked list PathPart (without Split)
-        // ===============================================================
         private PathPart ParsePath(string path, int start)
         {
             PathPart head = null;
@@ -96,15 +89,6 @@ namespace Crawler
             return head;
         }
 
-        // ===============================================================
-        // Matching logic
-        // pattern may be:
-        //  - "div"
-        //  - "p[3]"
-        //  - "table[@id='x']"
-        //  - "td[@class='x'][2]"
-        //  - "*"
-        // ===============================================================
         private bool Match(HtmlNode node, string pattern, ref int tagCounter)
         {
             if (pattern == "*")
@@ -120,18 +104,14 @@ namespace Crawler
 
             ParseStep(pattern, out tag, out attrName, out attrValue, out index);
 
-            // tag must match
             if (tag != "" && !EqualsIgnoreCase(node.TagName, tag))
                 return false;
 
-            // count same-tag siblings
             tagCounter++;
 
-            // index must match
             if (index != -1 && tagCounter != index)
                 return false;
 
-            // attribute match
             if (attrName != "")
             {
                 string v = node.Attributes.Get(attrName);
@@ -142,9 +122,6 @@ namespace Crawler
             return true;
         }
 
-        // ===============================================================
-        // parse something like:   td[@id='x'][3]
-        // ===============================================================
         private void ParseStep(string part,
                                out string tag,
                                out string attrName,
@@ -158,14 +135,12 @@ namespace Crawler
 
             int i = 0;
 
-            // read tag
             while (i < part.Length && part[i] != '[')
             {
                 tag += part[i];
                 i++;
             }
 
-            // read filters
             while (i < part.Length)
             {
                 if (part[i] == '[')
@@ -174,7 +149,6 @@ namespace Crawler
 
                     if (i < part.Length && part[i] == '@')
                     {
-                        // attribute
                         i++;
                         while (i < part.Length && part[i] != '=')
                         {
@@ -182,19 +156,18 @@ namespace Crawler
                             i++;
                         }
 
-                        i += 2; // skip ='
+                        i += 2; 
                         while (i < part.Length && part[i] != '\'')
                         {
                             attrValue += part[i];
                             i++;
                         }
-                        i++; // skip '
+                        i++;
 
                         while (i < part.Length && part[i] != ']') i++;
                     }
                     else
                     {
-                        // index
                         string num = "";
                         while (i < part.Length && part[i] != ']')
                         {

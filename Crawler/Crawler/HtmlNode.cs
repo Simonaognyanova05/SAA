@@ -12,7 +12,6 @@ namespace Crawler
         public HtmlNode NextSibling;
         public HtmlNode Parent;
 
-        // ✔ ЗАМЕНЕНО: вече използваме AttributeList
         public AttributeList Attributes;
 
         public HtmlNode(string tag, bool selfClosing = false)
@@ -20,7 +19,7 @@ namespace Crawler
             TagName = tag;
             IsSelfClosing = selfClosing;
             InnerText = "";
-            Attributes = new AttributeList();   // ✔ правилно
+            Attributes = new AttributeList();   
         }
 
         private string ManualTrim(string s)
@@ -76,7 +75,6 @@ namespace Crawler
             child.Parent = this;
         }
 
-        // ✔ вече работи с AttributeList
         public string GetAttribute(string name)
         {
             return Attributes.Get(name);
@@ -89,7 +87,6 @@ namespace Crawler
 
             Console.Write("<" + TagName);
 
-            // ✔ печат на linked-list атрибути
             HtmlAttribute curAttr = Attributes.Head;
             if (curAttr != null)
             {
@@ -170,10 +167,8 @@ namespace Crawler
             HtmlNode c = new HtmlNode(this.TagName, this.IsSelfClosing);
             c.InnerText = this.InnerText;
 
-            // ✔ shallow copy uses original AttributeList reference
             c.Attributes = this.Attributes;
 
-            // ✔ children are NOT copied (shallow)
             c.FirstChild = this.FirstChild;
 
             return c;
@@ -184,7 +179,6 @@ namespace Crawler
             HtmlNode c = new HtmlNode(this.TagName, this.IsSelfClosing);
             c.InnerText = this.InnerText;
 
-            // ✔ deep copy на AttributeList
             HtmlAttribute attr = this.Attributes.Head;
             while (attr != null)
             {
@@ -192,7 +186,6 @@ namespace Crawler
                 attr = attr.Next;
             }
 
-            // ✔ deep copy на децата
             HtmlNode child = FirstChild;
             HtmlNode prev = null;
 

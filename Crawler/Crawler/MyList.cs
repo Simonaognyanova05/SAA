@@ -42,7 +42,6 @@ namespace Crawler
             count++;
         }
 
-        // Индексатор — нужен за Program.cs и PRINT/PRINTP
         public T this[int index]
         {
             get
@@ -66,7 +65,6 @@ namespace Crawler
             }
         }
 
-        // foreach поддръжка
         public System.Collections.Generic.IEnumerable<T> ToEnumerable()
         {
             Node cur = head;

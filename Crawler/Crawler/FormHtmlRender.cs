@@ -14,132 +14,156 @@ namespace Crawler
         {
             root = node;
             this.DoubleBuffered = true;
-            this.Width = 900;
-            this.Height = 700;
             this.BackColor = Color.White;
-            this.Font = new Font("Arial", 9);
+            this.Font = new Font("Arial", 11);
+            this.Width = 1000;
+            this.Height = 800;
         }
 
         protected override void OnPaint(PaintEventArgs e)
         {
             base.OnPaint(e);
-            DrawNode(e.Graphics, root, 20, 20);
+            int y = 20;
+            DrawNode(e.Graphics, root, 20, ref y);
         }
 
-        private int DrawNode(Graphics g, HtmlNode node, int x, int y)
-        {
-            if (node == null) return y;
+        // ================== РЕНДЕР =====================
 
-            // TABLE
+        private void DrawNode(Graphics g, HtmlNode node, int x, ref int y)
+        {
+            if (node == null) return;
+
+            // -------- TABLE --------
             if (EqualsIgnoreCase(node.TagName, "table"))
             {
-                int startY = y;
-                int curY = y;
-
-                HtmlNode row = node.FirstChild;
-                while (row != null)
-                {
-                    int rowHeight = GetRowHeight(row);
-                    int curX = x;
-
-                    HtmlNode cell = row.FirstChild;
-                    while (cell != null)
-                    {
-                        Rectangle rect = new Rectangle(curX, curY, 150, rowHeight);
-
-                        g.DrawRectangle(Pens.Black, rect);
-
-                        if (!string.IsNullOrEmpty(cell.InnerText))
-                        {
-                            g.DrawString(cell.InnerText, this.Font, Brushes.Black, rect);
-                        }
-
-                        curX += 150;
-                        cell = cell.NextSibling;
-                    }
-
-                    curY += rowHeight;
-                    row = row.NextSibling;
-                }
-
-                return curY + 10;
+                DrawTable(g, node, x, ref y);
+                return;
             }
 
-            // IMG (only BMP)
+            // -------- IMAGE --------
             if (EqualsIgnoreCase(node.TagName, "img"))
             {
-                string src = node.GetAttribute("src");
-
-                if (!string.IsNullOrEmpty(src))
-                {
-                    string baseDir = AppDomain.CurrentDomain.BaseDirectory;
-                    string fullPath = Path.Combine(baseDir, src);
-
-                    if (File.Exists(fullPath) && src.EndsWith(".bmp", StringComparison.OrdinalIgnoreCase))
-                    {
-                        using (Bitmap bmp = new Bitmap(fullPath))
-                        {
-                            g.DrawImage(bmp, x, y);
-                            return y + bmp.Height + 10;
-                        }
-                    }
-                }
+                DrawImage(g, node, x, ref y);
+                return;
             }
 
-            // A (blue + underline)
+            // -------- LINK --------
             if (EqualsIgnoreCase(node.TagName, "a"))
             {
-                string txt = node.InnerText;
-                g.DrawString(txt, this.Font, Brushes.Blue, x, y);
-
-                SizeF size = g.MeasureString(txt, this.Font);
-                g.DrawLine(Pens.Blue, x, y + (int)size.Height, x + (int)size.Width, y + (int)size.Height);
-
-                return y + (int)size.Height + 5;
+                DrawLink(g, node, x, ref y);
             }
 
-            // Plain text
+            // -------- TEXT --------
             if (!string.IsNullOrWhiteSpace(node.InnerText))
             {
-                g.DrawString(node.InnerText, this.Font, Brushes.Black, x, y);
-                SizeF size = g.MeasureString(node.InnerText, this.Font);
-                y += (int)size.Height + 5;
+                string text = node.InnerText.Trim();
+                SizeF sz = g.MeasureString(text, this.Font);
+                g.DrawString(text, this.Font, Brushes.Black, x, y);
+                y += (int)sz.Height + 5;
             }
 
-            // Draw children
+            // -------- CHILDREN --------
             HtmlNode child = node.FirstChild;
             while (child != null)
             {
-                y = DrawNode(g, child, x + 20, y);
+                DrawNode(g, child, x + 20, ref y);
                 child = child.NextSibling;
             }
+        }
 
-            return y;
+        // ================== TABLE =====================
+
+        private void DrawTable(Graphics g, HtmlNode table, int x, ref int y)
+        {
+            int curY = y;
+
+            HtmlNode row = table.FirstChild;
+
+            while (row != null)
+            {
+                int rowHeight = GetRowHeight(row);
+                int curX = x;
+
+                HtmlNode cell = row.FirstChild;
+                while (cell != null)
+                {
+                    Rectangle rect = new Rectangle(curX, curY, 180, rowHeight);
+                    g.DrawRectangle(Pens.Black, rect);
+
+                    string txt = cell.InnerText == null ? "" : cell.InnerText.Trim();
+                    if (txt != "")
+                    {
+                        g.DrawString(txt, this.Font, Brushes.Black, rect);
+                    }
+
+                    curX += 180;
+                    cell = cell.NextSibling;
+                }
+
+                curY += rowHeight;
+                row = row.NextSibling;
+            }
+
+            y = curY + 10;
         }
 
         private int GetRowHeight(HtmlNode row)
         {
-            int max = 30;
+            int max = 25;
 
             HtmlNode cell = row.FirstChild;
             while (cell != null)
             {
-                if (!string.IsNullOrEmpty(cell.InnerText))
+                if (!string.IsNullOrWhiteSpace(cell.InnerText))
                 {
-                    int h = (int)TextRenderer.MeasureText(cell.InnerText, this.Font).Height + 10;
-                    if (h > max) max = h;
+                    Size size = TextRenderer.MeasureText(cell.InnerText.Trim(), this.Font);
+                    if (size.Height + 8 > max)
+                        max = size.Height + 8;
                 }
                 cell = cell.NextSibling;
             }
-
             return max;
+        }
+
+        // ================== IMAGE =====================
+
+        private void DrawImage(Graphics g, HtmlNode node, int x, ref int y)
+        {
+            string src = node.GetAttribute("src");
+            if (src == null) return;
+
+            string full = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, src);
+
+            if (!File.Exists(full)) return;
+
+            using (Bitmap bmp = new Bitmap(full))
+            {
+                g.DrawImage(bmp, x, y);
+                y += bmp.Height + 10;
+            }
+        }
+
+        // ================== LINK =====================
+
+        private void DrawLink(Graphics g, HtmlNode node, int x, ref int y)
+        {
+            string txt = node.InnerText == null ? "" : node.InnerText.Trim();
+
+            if (txt == "") return;
+
+            SizeF size = g.MeasureString(txt, this.Font);
+
+            g.DrawString(txt, this.Font, Brushes.Blue, x, y);
+            g.DrawLine(Pens.Blue, x, y + (int)size.Height, x + (int)size.Width, y + (int)size.Height);
+
+            y += (int)size.Height + 5;
         }
 
         private bool EqualsIgnoreCase(string a, string b)
         {
+            if (a == null || b == null) return false;
             return string.Equals(a, b, StringComparison.OrdinalIgnoreCase);
         }
-
         private void FormHtmlRender_Load(object sender, EventArgs e)
         {
 
