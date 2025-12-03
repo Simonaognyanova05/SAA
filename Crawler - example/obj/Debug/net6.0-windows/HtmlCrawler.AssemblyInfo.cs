@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("HtmlCrawler")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a8d15a45329fe5df8f5c9e797414dbf27a8d2bf4")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+02cae7be1a60f89447e710a82bfb79ec40409de2")]
 [assembly: System.Reflection.AssemblyProductAttribute("HtmlCrawler")]
 [assembly: System.Reflection.AssemblyTitleAttribute("HtmlCrawler")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

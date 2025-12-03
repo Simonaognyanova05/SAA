@@ -4,72 +4,61 @@ using System.Text;
 
 namespace Crawler
 {
-    // Simple single-file archive for HTML + resources (images).
-    // Format (human-friendly, no external libs):
-    //
-    // [SAA]
-    // [HTML_SIZE]
-    // <decimal length of compressed HTML>\n
-    // [HTML_COMPRESSED]
-    // <compressed HTML bytes (UTF8)>   <- exactly HTML_SIZE characters
-    //
-    // Then for each file:
-    // [FILE]
-    // <file path or name>\n
-    // [SIZE]
-    // <decimal byte length>\n
-    // [DATA]
-    // <HEX bytes: 2 chars per byte, uppercase>\n
-    //
-    // [END]
-    //
-    // All parsing/writing done manually (no Split/IndexOf/Regex/LINQ).
     public static class SimpleArchive
     {
-        // Save the HTML tree and all images referenced by <img src="...">
+        // ====================================================================
+        // I. ГЛАВНИ МЕТОДИ (Load/Save)
+        // ====================================================================
+
         public static void Save(string archivePath, HtmlNode root)
         {
             if (archivePath == null) throw new ArgumentNullException(nameof(archivePath));
             if (root == null) throw new ArgumentNullException(nameof(root));
 
-            // 1) produce HTML and compress it (textual)
             string html = root.ToHtmlString();
             string compressedHtml = SimpleCompressor.Compress(html);
 
-            // 2) gather image files referenced by img src attributes
             MyList<HtmlNode> images = CollectImageNodes(root);
 
-            using (FileStream fs = new FileStream(archivePath, FileMode.Create, FileAccess.Write))
-            using (StreamWriter w = new StreamWriter(fs, Encoding.UTF8))
+            FileStream fs = null;
+            StreamWriter w = null;
+            try
             {
-                // Header
-                w.WriteLine("[SAA]");
+                fs = new FileStream(archivePath, FileMode.Create, FileAccess.Write);
+                w = new StreamWriter(fs, Encoding.UTF8);
 
-                // HTML block
-                w.WriteLine("[HTML_SIZE]");
-                w.WriteLine(ManualIntToString(compressedHtml.Length));
-                w.WriteLine("[HTML_COMPRESSED]");
+                WriteLine(w, "[SAA]");
+                WriteLine(w, "[HTML_SIZE]");
+                WriteLine(w, ManualIntToString(compressedHtml.Length));
+                WriteLine(w, "[HTML_COMPRESSED]");
+
+                // Записва raw блок, следван от експлицитен \n
                 w.Write(compressedHtml);
-                w.WriteLine(); 
+                w.Write('\n');
+
                 for (int i = 0; i < images.Count; i++)
                 {
                     HtmlNode img = images[i];
                     string src = img.Attributes.Get("src");
                     if (src == null) continue;
-
                     if (!File.Exists(src)) continue;
 
                     byte[] data = File.ReadAllBytes(src);
 
-                    w.WriteLine("[FILE]");
-                    w.WriteLine(src);
-                    w.WriteLine("[SIZE]");
-                    w.WriteLine(ManualIntToString(data.Length));
-                    w.WriteLine("[DATA]");
+                    WriteLine(w, "[FILE]");
+                    WriteLine(w, src);
+                    WriteLine(w, "[SIZE]");
+                    WriteLine(w, ManualIntToString(data.Length));
+                    WriteLine(w, "[DATA]");
                     WriteHex(data, w);
                 }
 
-                w.WriteLine("[END]");
+                WriteLine(w, "[END]");
+            }
+            finally
+            {
+                if (w != null) w.Dispose();
+                if (fs != null) fs.Dispose();
             }
         }
 
@@ -93,9 +82,23 @@ namespace Crawler
             HtmlParser parser = new HtmlParser();
             HtmlNode root = parser.Parse(html);
 
+            HtmlNode currentRoot = root;
+            for (int i = 0; i < 2; i++)
+            {
+                if (currentRoot != null && EqualsIgnoreCase(currentRoot.TagName, "root") && currentRoot.FirstChild != null)
+                {
+                    currentRoot = currentRoot.FirstChild;
+                }
+                else
+                {
+                    break;
+                }
+            }
+            root = currentRoot;
+
             while (true)
             {
-                SkipNewLines(content, ref pos);
+                SkipNewLines(content, ref pos); // Този SkipNewLines консумира новия ред след HTML_COMPRESSED блока
                 if (LookAhead(content, pos, "[END]"))
                 {
                     Expect(content, ref pos, "[END]");
@@ -115,6 +118,30 @@ namespace Crawler
             }
 
             return root;
+        }
+
+        // ====================================================================
+        // II. РЪЧНИ ПОМОЩНИ ФУНКЦИИ (Критични I/O функции)
+        // ====================================================================
+
+        // КОРЕКЦИЯ: ReadBlock вече не извиква SkipNewLines, чете само съдържанието
+        private static string ReadBlock(string s, ref int pos, int len)
+        {
+            string result = "";
+            for (int i = 0; i < len; i++)
+            {
+                if (pos >= s.Length) break;
+                result += s[pos++];
+            }
+            return result;
+        }
+
+        // ... (Всички останали помощни функции от SimpleArchive остават непроменени) ...
+
+        private static void WriteLine(StreamWriter w, string s)
+        {
+            w.Write(s);
+            w.Write('\n');
         }
 
         private static MyList<HtmlNode> CollectImageNodes(HtmlNode root)
@@ -149,7 +176,7 @@ namespace Crawler
                 w.Write(h1);
                 w.Write(h2);
             }
-            w.WriteLine();
+            w.Write('\n');
         }
 
         private static byte[] ReadHexBytes(string s, ref int pos, int expectedSize)
@@ -183,32 +210,20 @@ namespace Crawler
 
         private static string ReadLine(string s, ref int pos)
         {
-            StringBuilder sb = new StringBuilder();
+            string result = "";
             while (pos < s.Length && s[pos] != '\n' && s[pos] != '\r')
             {
-                sb.Append(s[pos]);
+                result += s[pos];
                 pos++;
             }
             SkipNewLines(s, ref pos);
-            return sb.ToString();
+            return result;
         }
 
         private static int ReadIntLine(string s, ref int pos)
         {
             string line = ReadLine(s, ref pos);
             return ManualParseInt(line);
-        }
-
-        private static string ReadBlock(string s, ref int pos, int len)
-        {
-            StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < len; i++)
-            {
-                if (pos >= s.Length) break;
-                sb.Append(s[pos++]);
-            }
-            SkipNewLines(s, ref pos);
-            return sb.ToString();
         }
 
         private static void SkipNewLines(string s, ref int pos)
@@ -265,9 +280,9 @@ namespace Crawler
                 buf[p++] = (char)('0' + (v % 10));
                 v /= 10;
             }
-            StringBuilder sb = new StringBuilder();
-            for (int i = p - 1; i >= 0; i--) sb.Append(buf[i]);
-            return sb.ToString();
+            string result = "";
+            for (int i = p - 1; i >= 0; i--) result += buf[i];
+            return result;
         }
 
         private static bool EqualsIgnoreCase(string a, string b)

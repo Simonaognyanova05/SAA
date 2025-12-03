@@ -21,3 +21,26 @@ C:\Users\simon\OneDrive\Desktop\SAA\Crawler\obj\Debug\net6.0-windows\HtmlCrawler
 C:\Users\simon\OneDrive\Desktop\SAA\Crawler\obj\Debug\net6.0-windows\ref\HtmlCrawler.dll
 C:\Users\simon\OneDrive\Desktop\SAA\Crawler\obj\Debug\net6.0-windows\HtmlCrawler.VisualizerForm.resources
 C:\Users\simon\OneDrive\Desktop\SAA\Crawler\obj\Debug\net6.0-windows\HtmlCrawler.csproj.GenerateResource.cache
+C:\Users\simon\OneDrive\Desktop\SAA\Crawler - example\bin\Debug\net6.0-windows\HtmlCrawler.exe
+C:\Users\simon\OneDrive\Desktop\SAA\Crawler - example\bin\Debug\net6.0-windows\HtmlCrawler.deps.json
+C:\Users\simon\OneDrive\Desktop\SAA\Crawler - example\bin\Debug\net6.0-windows\HtmlCrawler.runtimeconfig.json
+C:\Users\simon\OneDrive\Desktop\SAA\Crawler - example\bin\Debug\net6.0-windows\HtmlCrawler.dll
+C:\Users\simon\OneDrive\Desktop\SAA\Crawler - example\bin\Debug\net6.0-windows\HtmlCrawler.pdb
+C:\Users\simon\OneDrive\Desktop\SAA\Crawler - example\bin\Debug\net6.0-windows\Microsoft.Win32.SystemEvents.dll
+C:\Users\simon\OneDrive\Desktop\SAA\Crawler - example\bin\Debug\net6.0-windows\System.Drawing.Common.dll
+C:\Users\simon\OneDrive\Desktop\SAA\Crawler - example\bin\Debug\net6.0-windows\runtimes\win\lib\net6.0\Microsoft.Win32.SystemEvents.dll
+C:\Users\simon\OneDrive\Desktop\SAA\Crawler - example\bin\Debug\net6.0-windows\runtimes\win\lib\net6.0\System.Drawing.Common.dll
+C:\Users\simon\OneDrive\Desktop\SAA\Crawler - example\obj\Debug\net6.0-windows\HtmlCrawler.csproj.AssemblyReference.cache
+C:\Users\simon\OneDrive\Desktop\SAA\Crawler - example\obj\Debug\net6.0-windows\HtmlCrawler.VisualizerForm.resources
+C:\Users\simon\OneDrive\Desktop\SAA\Crawler - example\obj\Debug\net6.0-windows\HtmlCrawler.csproj.GenerateResource.cache
+C:\Users\simon\OneDrive\Desktop\SAA\Crawler - example\obj\Debug\net6.0-windows\HtmlCrawler.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\simon\OneDrive\Desktop\SAA\Crawler - example\obj\Debug\net6.0-windows\HtmlCrawler.AssemblyInfoInputs.cache
+C:\Users\simon\OneDrive\Desktop\SAA\Crawler - example\obj\Debug\net6.0-windows\HtmlCrawler.AssemblyInfo.cs
+C:\Users\simon\OneDrive\Desktop\SAA\Crawler - example\obj\Debug\net6.0-windows\HtmlCrawler.csproj.CoreCompileInputs.cache
+C:\Users\simon\OneDrive\Desktop\SAA\Crawler - example\obj\Debug\net6.0-windows\HtmlCrawler.sourcelink.json
+C:\Users\simon\OneDrive\Desktop\SAA\Crawler - example\obj\Debug\net6.0-windows\HtmlCraw.A57229CD.Up2Date
+C:\Users\simon\OneDrive\Desktop\SAA\Crawler - example\obj\Debug\net6.0-windows\HtmlCrawler.dll
+C:\Users\simon\OneDrive\Desktop\SAA\Crawler - example\obj\Debug\net6.0-windows\refint\HtmlCrawler.dll
+C:\Users\simon\OneDrive\Desktop\SAA\Crawler - example\obj\Debug\net6.0-windows\HtmlCrawler.pdb
+C:\Users\simon\OneDrive\Desktop\SAA\Crawler - example\obj\Debug\net6.0-windows\HtmlCrawler.genruntimeconfig.cache
+C:\Users\simon\OneDrive\Desktop\SAA\Crawler - example\obj\Debug\net6.0-windows\ref\HtmlCrawler.dll

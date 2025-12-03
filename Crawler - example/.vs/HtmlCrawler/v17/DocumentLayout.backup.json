@@ -1,42 +1,42 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\simon\\OneDrive\\Desktop\\SAA\\Crawler\\",
+  "WorkspaceRootPath": "C:\\Users\\simon\\OneDrive\\Desktop\\SAA\\Crawler - example\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{9B0C1F3D-9C4B-4F2A-8B2C-1D2B6E4A5C3D}|HtmlCrawler.csproj|c:\\users\\simon\\onedrive\\desktop\\saa\\crawler\\queryengine.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{9B0C1F3D-9C4B-4F2A-8B2C-1D2B6E4A5C3D}|HtmlCrawler.csproj|C:\\Users\\simon\\OneDrive\\Desktop\\SAA\\Crawler - example\\visualizerform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{9B0C1F3D-9C4B-4F2A-8B2C-1D2B6E4A5C3D}|HtmlCrawler.csproj|solutionrelative:visualizerform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9B0C1F3D-9C4B-4F2A-8B2C-1D2B6E4A5C3D}|HtmlCrawler.csproj|c:\\users\\simon\\onedrive\\desktop\\saa\\crawler - example\\queryengine.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{9B0C1F3D-9C4B-4F2A-8B2C-1D2B6E4A5C3D}|HtmlCrawler.csproj|solutionrelative:queryengine.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{9B0C1F3D-9C4B-4F2A-8B2C-1D2B6E4A5C3D}|HtmlCrawler.csproj|c:\\users\\simon\\onedrive\\desktop\\saa\\crawler\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{9B0C1F3D-9C4B-4F2A-8B2C-1D2B6E4A5C3D}|HtmlCrawler.csproj|c:\\users\\simon\\onedrive\\desktop\\saa\\crawler - example\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{9B0C1F3D-9C4B-4F2A-8B2C-1D2B6E4A5C3D}|HtmlCrawler.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{9B0C1F3D-9C4B-4F2A-8B2C-1D2B6E4A5C3D}|HtmlCrawler.csproj|c:\\users\\simon\\onedrive\\desktop\\saa\\crawler\\htmlparser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{9B0C1F3D-9C4B-4F2A-8B2C-1D2B6E4A5C3D}|HtmlCrawler.csproj|c:\\users\\simon\\onedrive\\desktop\\saa\\crawler - example\\htmlparser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{9B0C1F3D-9C4B-4F2A-8B2C-1D2B6E4A5C3D}|HtmlCrawler.csproj|solutionrelative:htmlparser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{9B0C1F3D-9C4B-4F2A-8B2C-1D2B6E4A5C3D}|HtmlCrawler.csproj|c:\\users\\simon\\onedrive\\desktop\\saa\\crawler\\htmlnode.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{9B0C1F3D-9C4B-4F2A-8B2C-1D2B6E4A5C3D}|HtmlCrawler.csproj|c:\\users\\simon\\onedrive\\desktop\\saa\\crawler - example\\htmlnode.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{9B0C1F3D-9C4B-4F2A-8B2C-1D2B6E4A5C3D}|HtmlCrawler.csproj|solutionrelative:htmlnode.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{9B0C1F3D-9C4B-4F2A-8B2C-1D2B6E4A5C3D}|HtmlCrawler.csproj|c:\\users\\simon\\onedrive\\desktop\\saa\\crawler\\commands.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{9B0C1F3D-9C4B-4F2A-8B2C-1D2B6E4A5C3D}|HtmlCrawler.csproj|c:\\users\\simon\\onedrive\\desktop\\saa\\crawler - example\\commands.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{9B0C1F3D-9C4B-4F2A-8B2C-1D2B6E4A5C3D}|HtmlCrawler.csproj|solutionrelative:commands.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{9B0C1F3D-9C4B-4F2A-8B2C-1D2B6E4A5C3D}|HtmlCrawler.csproj|c:\\users\\simon\\onedrive\\desktop\\saa\\crawler\\commandlinesplitter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{9B0C1F3D-9C4B-4F2A-8B2C-1D2B6E4A5C3D}|HtmlCrawler.csproj|c:\\users\\simon\\onedrive\\desktop\\saa\\crawler - example\\commandlinesplitter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{9B0C1F3D-9C4B-4F2A-8B2C-1D2B6E4A5C3D}|HtmlCrawler.csproj|solutionrelative:commandlinesplitter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{9B0C1F3D-9C4B-4F2A-8B2C-1D2B6E4A5C3D}|HtmlCrawler.csproj|c:\\users\\simon\\onedrive\\desktop\\saa\\crawler\\archivemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{9B0C1F3D-9C4B-4F2A-8B2C-1D2B6E4A5C3D}|HtmlCrawler.csproj|c:\\users\\simon\\onedrive\\desktop\\saa\\crawler - example\\archivemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{9B0C1F3D-9C4B-4F2A-8B2C-1D2B6E4A5C3D}|HtmlCrawler.csproj|solutionrelative:archivemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{9B0C1F3D-9C4B-4F2A-8B2C-1D2B6E4A5C3D}|HtmlCrawler.csproj|c:\\users\\simon\\onedrive\\desktop\\saa\\crawler\\visualizerform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{9B0C1F3D-9C4B-4F2A-8B2C-1D2B6E4A5C3D}|HtmlCrawler.csproj|c:\\users\\simon\\onedrive\\desktop\\saa\\crawler - example\\visualizerform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{9B0C1F3D-9C4B-4F2A-8B2C-1D2B6E4A5C3D}|HtmlCrawler.csproj|solutionrelative:visualizerform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9B0C1F3D-9C4B-4F2A-8B2C-1D2B6E4A5C3D}|HtmlCrawler.csproj|c:\\users\\simon\\onedrive\\desktop\\saa\\crawler\\visualizerform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{9B0C1F3D-9C4B-4F2A-8B2C-1D2B6E4A5C3D}|HtmlCrawler.csproj|solutionrelative:visualizerform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     }
   ],
   "DocumentGroupContainers": [
@@ -46,106 +46,100 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 7,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "HtmlNode.cs",
-              "DocumentMoniker": "C:\\Users\\simon\\OneDrive\\Desktop\\SAA\\Crawler\\HtmlNode.cs",
+              "DocumentMoniker": "C:\\Users\\simon\\OneDrive\\Desktop\\SAA\\Crawler - example\\HtmlNode.cs",
               "RelativeDocumentMoniker": "HtmlNode.cs",
-              "ToolTip": "C:\\Users\\simon\\OneDrive\\Desktop\\SAA\\Crawler\\HtmlNode.cs",
+              "ToolTip": "C:\\Users\\simon\\OneDrive\\Desktop\\SAA\\Crawler - example\\HtmlNode.cs",
               "RelativeToolTip": "HtmlNode.cs",
               "ViewState": "AgIAAD8AAAAAAAAAAAAAAC8AAABoAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-30T10:37:33.94Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "Commands.cs",
-              "DocumentMoniker": "C:\\Users\\simon\\OneDrive\\Desktop\\SAA\\Crawler\\Commands.cs",
-              "RelativeDocumentMoniker": "Commands.cs",
-              "ToolTip": "C:\\Users\\simon\\OneDrive\\Desktop\\SAA\\Crawler\\Commands.cs",
-              "RelativeToolTip": "Commands.cs",
-              "ViewState": "AgIAABkAAAAAAAAAAAAAAA4AAAARAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-30T10:37:27.44Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-30T10:37:33.94Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 5,
-              "Title": "CommandLineSplitter.cs",
-              "DocumentMoniker": "C:\\Users\\simon\\OneDrive\\Desktop\\SAA\\Crawler\\CommandLineSplitter.cs",
-              "RelativeDocumentMoniker": "CommandLineSplitter.cs",
-              "ToolTip": "C:\\Users\\simon\\OneDrive\\Desktop\\SAA\\Crawler\\CommandLineSplitter.cs",
-              "RelativeToolTip": "CommandLineSplitter.cs",
-              "ViewState": "AgIAABoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Title": "Commands.cs",
+              "DocumentMoniker": "C:\\Users\\simon\\OneDrive\\Desktop\\SAA\\Crawler - example\\Commands.cs",
+              "RelativeDocumentMoniker": "Commands.cs",
+              "ToolTip": "C:\\Users\\simon\\OneDrive\\Desktop\\SAA\\Crawler - example\\Commands.cs",
+              "RelativeToolTip": "Commands.cs",
+              "ViewState": "AgIAABkAAAAAAAAAAAAAAA4AAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-30T10:37:23.233Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-30T10:37:27.44Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 6,
+              "Title": "CommandLineSplitter.cs",
+              "DocumentMoniker": "C:\\Users\\simon\\OneDrive\\Desktop\\SAA\\Crawler - example\\CommandLineSplitter.cs",
+              "RelativeDocumentMoniker": "CommandLineSplitter.cs",
+              "ToolTip": "C:\\Users\\simon\\OneDrive\\Desktop\\SAA\\Crawler - example\\CommandLineSplitter.cs",
+              "RelativeToolTip": "CommandLineSplitter.cs",
+              "ViewState": "AgIAABoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-30T10:37:23.233Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
               "Title": "ArchiveManager.cs",
-              "DocumentMoniker": "C:\\Users\\simon\\OneDrive\\Desktop\\SAA\\Crawler\\ArchiveManager.cs",
+              "DocumentMoniker": "C:\\Users\\simon\\OneDrive\\Desktop\\SAA\\Crawler - example\\ArchiveManager.cs",
               "RelativeDocumentMoniker": "ArchiveManager.cs",
-              "ToolTip": "C:\\Users\\simon\\OneDrive\\Desktop\\SAA\\Crawler\\ArchiveManager.cs",
+              "ToolTip": "C:\\Users\\simon\\OneDrive\\Desktop\\SAA\\Crawler - example\\ArchiveManager.cs",
               "RelativeToolTip": "ArchiveManager.cs",
               "ViewState": "AgIAAC8AAAAAAAAAAAAAAAUAAAAVAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-30T10:36:58.275Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-30T10:36:58.275Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "HtmlParser.cs",
-              "DocumentMoniker": "C:\\Users\\simon\\OneDrive\\Desktop\\SAA\\Crawler\\HtmlParser.cs",
+              "DocumentMoniker": "C:\\Users\\simon\\OneDrive\\Desktop\\SAA\\Crawler - example\\HtmlParser.cs",
               "RelativeDocumentMoniker": "HtmlParser.cs",
-              "ToolTip": "C:\\Users\\simon\\OneDrive\\Desktop\\SAA\\Crawler\\HtmlParser.cs",
+              "ToolTip": "C:\\Users\\simon\\OneDrive\\Desktop\\SAA\\Crawler - example\\HtmlParser.cs",
               "RelativeToolTip": "HtmlParser.cs",
               "ViewState": "AgIAAHMAAAAAAAAAAAAAAEoAAAAZAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-30T10:25:49.963Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-30T10:25:49.963Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "QueryEngine.cs",
-              "DocumentMoniker": "C:\\Users\\simon\\OneDrive\\Desktop\\SAA\\Crawler\\QueryEngine.cs",
+              "DocumentMoniker": "C:\\Users\\simon\\OneDrive\\Desktop\\SAA\\Crawler - example\\QueryEngine.cs",
               "RelativeDocumentMoniker": "QueryEngine.cs",
-              "ToolTip": "C:\\Users\\simon\\OneDrive\\Desktop\\SAA\\Crawler\\QueryEngine.cs",
+              "ToolTip": "C:\\Users\\simon\\OneDrive\\Desktop\\SAA\\Crawler - example\\QueryEngine.cs",
               "RelativeToolTip": "QueryEngine.cs",
-              "ViewState": "AgIAAE8AAAAAAAAAAAAwwGAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-10-30T10:25:41.692Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\simon\\OneDrive\\Desktop\\SAA\\Crawler\\Program.cs",
+              "DocumentMoniker": "C:\\Users\\simon\\OneDrive\\Desktop\\SAA\\Crawler - example\\Program.cs",
               "RelativeDocumentMoniker": "Program.cs",
-              "ToolTip": "C:\\Users\\simon\\OneDrive\\Desktop\\SAA\\Crawler\\Program.cs",
+              "ToolTip": "C:\\Users\\simon\\OneDrive\\Desktop\\SAA\\Crawler - example\\Program.cs",
               "RelativeToolTip": "Program.cs",
               "ViewState": "AgIAAFQAAAAAAAAAAAAAAA0AAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-30T10:25:25.903Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-30T10:25:25.903Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 0,
               "Title": "VisualizerForm.cs [Design]",
-              "DocumentMoniker": "C:\\Users\\simon\\OneDrive\\Desktop\\SAA\\Crawler\\VisualizerForm.cs",
+              "DocumentMoniker": "C:\\Users\\simon\\OneDrive\\Desktop\\SAA\\Crawler - example\\VisualizerForm.cs",
               "RelativeDocumentMoniker": "VisualizerForm.cs",
-              "ToolTip": "C:\\Users\\simon\\OneDrive\\Desktop\\SAA\\Crawler\\VisualizerForm.cs [Design]",
+              "ToolTip": "C:\\Users\\simon\\OneDrive\\Desktop\\SAA\\Crawler - example\\VisualizerForm.cs [Design]",
               "RelativeToolTip": "VisualizerForm.cs [Design]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-10-30T10:22:01.914Z",
@@ -153,16 +147,15 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 8,
               "Title": "VisualizerForm.cs",
-              "DocumentMoniker": "C:\\Users\\simon\\OneDrive\\Desktop\\SAA\\Crawler\\VisualizerForm.cs",
+              "DocumentMoniker": "C:\\Users\\simon\\OneDrive\\Desktop\\SAA\\Crawler - example\\VisualizerForm.cs",
               "RelativeDocumentMoniker": "VisualizerForm.cs",
-              "ToolTip": "C:\\Users\\simon\\OneDrive\\Desktop\\SAA\\Crawler\\VisualizerForm.cs",
+              "ToolTip": "C:\\Users\\simon\\OneDrive\\Desktop\\SAA\\Crawler - example\\VisualizerForm.cs",
               "RelativeToolTip": "VisualizerForm.cs",
               "ViewState": "AgIAAIcAAAAAAAAAAAAYwKEAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-30T10:16:22.658Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-30T10:16:22.658Z"
             }
           ]
         }

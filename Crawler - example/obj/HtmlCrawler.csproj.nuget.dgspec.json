@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\simon\\OneDrive\\Desktop\\SAA\\Crawler\\HtmlCrawler.csproj": {}
+    "C:\\Users\\simon\\OneDrive\\Desktop\\SAA\\Crawler - example\\HtmlCrawler.csproj": {}
   },
   "projects": {
-    "C:\\Users\\simon\\OneDrive\\Desktop\\SAA\\Crawler\\HtmlCrawler.csproj": {
+    "C:\\Users\\simon\\OneDrive\\Desktop\\SAA\\Crawler - example\\HtmlCrawler.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\simon\\OneDrive\\Desktop\\SAA\\Crawler\\HtmlCrawler.csproj",
+        "projectUniqueName": "C:\\Users\\simon\\OneDrive\\Desktop\\SAA\\Crawler - example\\HtmlCrawler.csproj",
         "projectName": "HtmlCrawler",
-        "projectPath": "C:\\Users\\simon\\OneDrive\\Desktop\\SAA\\Crawler\\HtmlCrawler.csproj",
+        "projectPath": "C:\\Users\\simon\\OneDrive\\Desktop\\SAA\\Crawler - example\\HtmlCrawler.csproj",
         "packagesPath": "C:\\Users\\simon\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\simon\\OneDrive\\Desktop\\SAA\\Crawler\\obj\\",
+        "outputPath": "C:\\Users\\simon\\OneDrive\\Desktop\\SAA\\Crawler - example\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

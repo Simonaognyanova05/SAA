@@ -1,133 +1,161 @@
-﻿using System.Text;
+﻿using System;
+// НЕ СЕ ИЗПОЛЗВАТ: System.Text, System.IO, System.Linq
 
 namespace Crawler
 {
     public static class SimpleCompressor
     {
-        public static string Compress(string html)
+        // ====================================================================
+        // I. Ръчни Помощни Функции
+        // ====================================================================
+
+        private static bool IsHtmlSymbol(char c)
         {
-            return CompressText(html);
+            return c == '<' || c == '>' || c == '&' || c == ';';
         }
 
-        public static string Decompress(string compressed)
+        private static string IntToString(int value)
         {
-            return DecompressText(compressed);
-        }
+            if (value == 0) return "0";
 
+            string result = "";
+            int temp = value;
+            int digit;
 
-        public static void CompressHtml(HtmlNode root)
-        {
-            if (root == null) return;
-
-            if (!string.IsNullOrEmpty(root.InnerText))
-                root.InnerText = CompressText(root.InnerText);
-
-            HtmlNode ch = root.FirstChild;
-            while (ch != null)
+            while (temp > 0)
             {
-                CompressHtml(ch);
-                ch = ch.NextSibling;
+                digit = temp % 10;
+                char c = (char)('0' + digit);
+
+                result = c + result;
+
+                temp /= 10;
             }
+
+            return result;
         }
 
-        public static void DecompressHtml(HtmlNode root)
-        {
-            if (root == null) return;
 
-            if (!string.IsNullOrEmpty(root.InnerText))
-                root.InnerText = DecompressText(root.InnerText);
+        // ====================================================================
+        // II. Алгоритми за RLE (Total Count N)
+        // ====================================================================
 
-            HtmlNode ch = root.FirstChild;
-            while (ch != null)
-            {
-                DecompressHtml(ch);
-                ch = ch.NextSibling;
-            }
-        }
-
+        /// <summary>
+        /// Ръчна RLE компресия: Символ + Общ Брой Повторения (N). 
+        /// </summary>
         private static string CompressText(string input)
         {
-            if (string.IsNullOrEmpty(input)) return "";
+            if (input == null || input.Length == 0) return "";
 
-            StringBuilder sb = new StringBuilder();
-            char prev = input[0];
-            int count = 1;
+            string result = "";
+            int i = 0;
 
-            for (int i = 1; i < input.Length; i++)
+            while (i < input.Length)
             {
-                if (input[i] == prev)
+                char c = input[i];
+
+                // HTML символи И ЦИФРИ се записват директно.
+                if (IsHtmlSymbol(c) || (c >= '0' && c <= '9'))
+                {
+                    result += c;
+                    i++;
+                    continue;
+                }
+
+                // RLE логика:
+                int count = 1;
+                int j = i + 1;
+
+                while (j < input.Length && input[j] == c)
                 {
                     count++;
+                    j++;
                 }
-                else
-                {
-                    sb.Append(prev);
-                    if (count > 1) sb.Append(count);
 
-                    prev = input[i];
-                    count = 1;
+                // 1. Добавяме символа
+                result += c;
+
+                if (count > 1)
+                {
+                    // 2. Добавяме ОБЩИЯ брой повторения (N)
+                    result += IntToString(count);
                 }
+
+                i = j;
             }
 
-            sb.Append(prev);
-            if (count > 1) sb.Append(count);
-
-            return sb.ToString();
+            return result;
         }
 
-
+        /// <summary>
+        /// Ръчна RLE декомпресия (Total Count N).
+        /// </summary>
         private static string DecompressText(string input)
         {
-            if (string.IsNullOrEmpty(input)) return "";
+            if (input == null || input.Length == 0) return "";
 
-            StringBuilder sb = new StringBuilder();
-            char chr = '\0';
-            string digits = "";
+            string result = "";
 
             for (int i = 0; i < input.Length; i++)
             {
                 char c = input[i];
 
-                if (c >= '0' && c <= '9')
+                // HTML символи И ЦИФРИ се добавят директно.
+                if (IsHtmlSymbol(c) || (c >= '0' && c <= '9'))
                 {
-                    digits += c;
+                    result += c;
+                    continue;
+                }
+
+                // 1. Намиране на брояч на ОБЩИЯ брой повторения (N_total)
+                int k = i + 1;
+                string countStr = "";
+                while (k < input.Length && input[k] >= '0' && input[k] <= '9')
+                {
+                    countStr += input[k];
+                    k++;
+                }
+
+                if (countStr.Length > 0)
+                {
+                    // 2. Ръчно парсване на N_total
+                    int N_total = 0;
+                    int powerOf10 = 1;
+                    for (int j = countStr.Length - 1; j >= 0; j--)
+                    {
+                        N_total += (countStr[j] - '0') * powerOf10;
+                        powerOf10 *= 10;
+                    }
+
+                    // 3. Добавяне на символа N_total пъти. (Това е най-чистата логика!)
+                    for (int j = 0; j < N_total; j++)
+                        result += c;
+
+                    // 4. Преместване на индекса i, за да прескочим брояча
+                    i = k - 1;
                 }
                 else
                 {
-                    if (chr != '\0')
-                    {
-                        int count = digits == "" ? 1 : ManualParseInt(digits);
-                        for (int j = 0; j < count; j++)
-                            sb.Append(chr);
-                    }
-
-                    chr = c;
-                    digits = "";
+                    // N = 1 случай: Няма брояч, добавяме символа веднъж
+                    result += c;
                 }
             }
 
-            if (chr != '\0')
-            {
-                int count = digits == "" ? 1 : ManualParseInt(digits);
-
-                for (int j = 0; j < count; j++)
-                    sb.Append(chr);
-            }
-
-            return sb.ToString();
+            return result;
         }
 
+        // ====================================================================
+        // III. ПУБЛИЧНИ МЕТОДИ
+        // ====================================================================
 
-        private static int ManualParseInt(string s)
+        public static string Compress(string input)
         {
-            int x = 0;
-            for (int i = 0; i < s.Length; i++)
-            {
-                char c = s[i];
-                if (c < '0' || c > '9') return 1;
-                x = x * 10 + (c - '0');
-            }
-            return x;
+            return CompressText(input);
+        }
+
+        public static string Decompress(string input)
+        {
+            return DecompressText(input);
         }
     }
 }
