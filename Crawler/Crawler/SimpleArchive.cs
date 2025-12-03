@@ -50,16 +50,13 @@ namespace Crawler
                 w.WriteLine(ManualIntToString(compressedHtml.Length));
                 w.WriteLine("[HTML_COMPRESSED]");
                 w.Write(compressedHtml);
-                w.WriteLine(); // ensure newline after html block
-
-                // For each image, write file metadata + hex data
+                w.WriteLine(); 
                 for (int i = 0; i < images.Count; i++)
                 {
                     HtmlNode img = images[i];
                     string src = img.Attributes.Get("src");
                     if (src == null) continue;
 
-                    // Only pack if file exists
                     if (!File.Exists(src)) continue;
 
                     byte[] data = File.ReadAllBytes(src);
@@ -76,7 +73,6 @@ namespace Crawler
             }
         }
 
-        // Load archive, returns HtmlNode root; files are restored to disk with original names.
         public static HtmlNode Load(string archivePath)
         {
             if (archivePath == null) throw new ArgumentNullException(nameof(archivePath));
@@ -87,30 +83,25 @@ namespace Crawler
 
             Expect(content, ref pos, "[SAA]");
 
-            // Read HTML
             Expect(content, ref pos, "[HTML_SIZE]");
             int htmlSize = ReadIntLine(content, ref pos);
 
             Expect(content, ref pos, "[HTML_COMPRESSED]");
             string compressedHtml = ReadBlock(content, ref pos, htmlSize);
 
-            // decompress and parse
             string html = SimpleCompressor.Decompress(compressedHtml);
             HtmlParser parser = new HtmlParser();
             HtmlNode root = parser.Parse(html);
 
-            // Now read files until [END]
             while (true)
             {
                 SkipNewLines(content, ref pos);
                 if (LookAhead(content, pos, "[END]"))
                 {
-                    // consume [END]
                     Expect(content, ref pos, "[END]");
                     break;
                 }
 
-                // expect [FILE]
                 Expect(content, ref pos, "[FILE]");
                 string filename = ReadLine(content, ref pos);
 
@@ -120,14 +111,12 @@ namespace Crawler
                 Expect(content, ref pos, "[DATA]");
                 byte[] data = ReadHexBytes(content, ref pos, size);
 
-                // write file to disk (overwrite if exists)
                 File.WriteAllBytes(filename, data);
             }
 
             return root;
         }
 
-        // ---------------- helper: collect <img> nodes recursively ----------------
         private static MyList<HtmlNode> CollectImageNodes(HtmlNode root)
         {
             MyList<HtmlNode> list = new MyList<HtmlNode>();
@@ -150,10 +139,8 @@ namespace Crawler
             }
         }
 
-        // ---------------- write/read hex for binary data (2 chars per byte) ---------------
         private static void WriteHex(byte[] data, StreamWriter w)
         {
-            // write all bytes as HEX uppercase, then newline
             for (int i = 0; i < data.Length; i++)
             {
                 int b = data[i];
@@ -178,12 +165,10 @@ namespace Crawler
                 int n2 = HexToNibble(c2);
                 result[i] = (byte)((n1 << 4) | n2);
             }
-            // consume newline(s) after hex block
             SkipNewLines(s, ref pos);
             return result;
         }
 
-        // ---------------- manual file-format parsing helpers (no Split/IndexOf) -----------
         private static void Expect(string s, ref int pos, string token)
         {
             SkipNewLines(s, ref pos);
@@ -193,7 +178,6 @@ namespace Crawler
                     throw new Exception("Archive format error: expected token " + token);
             }
             pos += token.Length;
-            // consume newline after token if present
             SkipNewLines(s, ref pos);
         }
 
@@ -223,7 +207,6 @@ namespace Crawler
                 if (pos >= s.Length) break;
                 sb.Append(s[pos++]);
             }
-            // ensure we are after the block; consume newline(s)
             SkipNewLines(s, ref pos);
             return sb.ToString();
         }
@@ -244,7 +227,6 @@ namespace Crawler
             return true;
         }
 
-        // ---------------- small utilities -------------------
         private static char NibbleToHex(int v)
         {
             if (v < 10) return (char)('0' + v);

@@ -4,26 +4,16 @@ namespace Crawler
 {
     public static class SimpleCompressor
     {
-        // ============================================================
-        // PUBLIC API USED BY ARCHIVER
-        // ============================================================
-
-        // Компресира цял HTML документ като текст (RLE)
         public static string Compress(string html)
         {
             return CompressText(html);
         }
 
-        // Декомпресира цял HTML документ като текст
         public static string Decompress(string compressed)
         {
             return DecompressText(compressed);
         }
 
-
-        // ============================================================
-        // FOR TREE COMPRESSION (optional)
-        // ============================================================
 
         public static void CompressHtml(HtmlNode root)
         {
@@ -54,11 +44,6 @@ namespace Crawler
                 ch = ch.NextSibling;
             }
         }
-
-
-        // ============================================================
-        // RLE TEXT COMPRESSION
-        // ============================================================
 
         private static string CompressText(string input)
         {
@@ -121,7 +106,6 @@ namespace Crawler
                 }
             }
 
-            // финален блок
             if (chr != '\0')
             {
                 int count = digits == "" ? 1 : ManualParseInt(digits);
@@ -133,10 +117,6 @@ namespace Crawler
             return sb.ToString();
         }
 
-
-        // ============================================================
-        // Manual Parser (NO int.Parse)
-        // ============================================================
 
         private static int ManualParseInt(string s)
         {
