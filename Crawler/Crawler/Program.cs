@@ -111,9 +111,10 @@ namespace Crawler
                         continue;
                     }
 
-                    string html = root.ToHtmlString();
-                    string compressed = Compress(html);
-                    File.WriteAllText(argument, compressed);
+                    SimpleArchive.Save(argument, root);
+                    Console.WriteLine("💾 Архивът е записа̀н!");
+
+
 
                     Console.WriteLine("💾 Записано!");
                 }
@@ -133,11 +134,9 @@ namespace Crawler
                         continue;
                     }
 
-                    string compressed = File.ReadAllText(argument);
-                    string html = Decompress(compressed);
-                    root = parser.Parse(html);
+                    root = SimpleArchive.Load(argument);
+                    Console.WriteLine("📂 Архивът е зареден!");
 
-                    Console.WriteLine("📂 Архивът е зареден.");
                 }
 
                 // PRINT, PRINTP, SET, COPY

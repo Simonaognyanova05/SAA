@@ -1,16 +1,70 @@
-﻿using System;
-using System.IO;
-using System.Text;
+﻿using System.Text;
 
 namespace Crawler
 {
     public static class SimpleCompressor
     {
-        public static string Compress(string input)
+        // ============================================================
+        // PUBLIC API USED BY ARCHIVER
+        // ============================================================
+
+        // Компресира цял HTML документ като текст (RLE)
+        public static string Compress(string html)
+        {
+            return CompressText(html);
+        }
+
+        // Декомпресира цял HTML документ като текст
+        public static string Decompress(string compressed)
+        {
+            return DecompressText(compressed);
+        }
+
+
+        // ============================================================
+        // FOR TREE COMPRESSION (optional)
+        // ============================================================
+
+        public static void CompressHtml(HtmlNode root)
+        {
+            if (root == null) return;
+
+            if (!string.IsNullOrEmpty(root.InnerText))
+                root.InnerText = CompressText(root.InnerText);
+
+            HtmlNode ch = root.FirstChild;
+            while (ch != null)
+            {
+                CompressHtml(ch);
+                ch = ch.NextSibling;
+            }
+        }
+
+        public static void DecompressHtml(HtmlNode root)
+        {
+            if (root == null) return;
+
+            if (!string.IsNullOrEmpty(root.InnerText))
+                root.InnerText = DecompressText(root.InnerText);
+
+            HtmlNode ch = root.FirstChild;
+            while (ch != null)
+            {
+                DecompressHtml(ch);
+                ch = ch.NextSibling;
+            }
+        }
+
+
+        // ============================================================
+        // RLE TEXT COMPRESSION
+        // ============================================================
+
+        private static string CompressText(string input)
         {
             if (string.IsNullOrEmpty(input)) return "";
 
-            StringBuilder output = new StringBuilder();
+            StringBuilder sb = new StringBuilder();
             char prev = input[0];
             int count = 1;
 
@@ -22,63 +76,78 @@ namespace Crawler
                 }
                 else
                 {
-                    output.Append(prev);
-                    if (count > 1)
-                        output.Append(count);
+                    sb.Append(prev);
+                    if (count > 1) sb.Append(count);
+
                     prev = input[i];
                     count = 1;
                 }
             }
 
-            output.Append(prev);
-            if (count > 1)
-                output.Append(count);
+            sb.Append(prev);
+            if (count > 1) sb.Append(count);
 
-            return output.ToString();
+            return sb.ToString();
         }
 
-        public static string Decompress(string input)
+
+        private static string DecompressText(string input)
         {
             if (string.IsNullOrEmpty(input)) return "";
 
-            StringBuilder output = new StringBuilder();
-            char currentChar = '\0';
-            string countStr = "";
+            StringBuilder sb = new StringBuilder();
+            char chr = '\0';
+            string digits = "";
 
             for (int i = 0; i < input.Length; i++)
             {
                 char c = input[i];
-                if (char.IsLetterOrDigit(currentChar) && char.IsDigit(c))
+
+                if (c >= '0' && c <= '9')
                 {
-                    countStr += c;
+                    digits += c;
                 }
                 else
                 {
-                    if (currentChar != '\0')
+                    if (chr != '\0')
                     {
-                        int count = 1;
-                        if (countStr != "")
-                        {
-                            int.TryParse(countStr, out count);
-                        }
+                        int count = digits == "" ? 1 : ManualParseInt(digits);
                         for (int j = 0; j < count; j++)
-                            output.Append(currentChar);
+                            sb.Append(chr);
                     }
-                    currentChar = c;
-                    countStr = "";
+
+                    chr = c;
+                    digits = "";
                 }
             }
 
-            if (currentChar != '\0')
+            // финален блок
+            if (chr != '\0')
             {
-                int count = 1;
-                if (countStr != "")
-                    int.TryParse(countStr, out count);
+                int count = digits == "" ? 1 : ManualParseInt(digits);
+
                 for (int j = 0; j < count; j++)
-                    output.Append(currentChar);
+                    sb.Append(chr);
             }
 
-            return output.ToString();
+            return sb.ToString();
+        }
+
+
+        // ============================================================
+        // Manual Parser (NO int.Parse)
+        // ============================================================
+
+        private static int ManualParseInt(string s)
+        {
+            int x = 0;
+            for (int i = 0; i < s.Length; i++)
+            {
+                char c = s[i];
+                if (c < '0' || c > '9') return 1;
+                x = x * 10 + (c - '0');
+            }
+            return x;
         }
     }
 }
