@@ -6,10 +6,6 @@ namespace Crawler
 {
     public static class SimpleArchive
     {
-        // ====================================================================
-        // I. ГЛАВНИ МЕТОДИ (Load/Save)
-        // ====================================================================
-
         public static void Save(string archivePath, HtmlNode root)
         {
             if (archivePath == null) throw new ArgumentNullException(nameof(archivePath));
@@ -32,7 +28,6 @@ namespace Crawler
                 WriteLine(w, ManualIntToString(compressedHtml.Length));
                 WriteLine(w, "[HTML_COMPRESSED]");
 
-                // Записва raw блок, следван от експлицитен \n
                 w.Write(compressedHtml);
                 w.Write('\n');
 
@@ -98,7 +93,7 @@ namespace Crawler
 
             while (true)
             {
-                SkipNewLines(content, ref pos); // Този SkipNewLines консумира новия ред след HTML_COMPRESSED блока
+                SkipNewLines(content, ref pos); 
                 if (LookAhead(content, pos, "[END]"))
                 {
                     Expect(content, ref pos, "[END]");
@@ -120,11 +115,6 @@ namespace Crawler
             return root;
         }
 
-        // ====================================================================
-        // II. РЪЧНИ ПОМОЩНИ ФУНКЦИИ (Критични I/O функции)
-        // ====================================================================
-
-        // КОРЕКЦИЯ: ReadBlock вече не извиква SkipNewLines, чете само съдържанието
         private static string ReadBlock(string s, ref int pos, int len)
         {
             string result = "";
@@ -136,7 +126,6 @@ namespace Crawler
             return result;
         }
 
-        // ... (Всички останали помощни функции от SimpleArchive остават непроменени) ...
 
         private static void WriteLine(StreamWriter w, string s)
         {

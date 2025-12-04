@@ -45,14 +45,12 @@ namespace Crawler
                 while (k < command.Length)
                     argument += command[k++];
 
-                // exit
                 if (cmd == "exit")
                 {
                     Console.WriteLine("Изход...");
                     break;
                 }
 
-                // load file
                 else if (cmd == "load")
                 {
                     if (argument == "")
@@ -84,7 +82,6 @@ namespace Crawler
                     }
                 }
 
-                // print tree
                 else if (cmd == "print")
                 {
                     if (root == null)
@@ -96,7 +93,6 @@ namespace Crawler
                     root.Print();
                 }
 
-                // SAVE archive
                 else if (cmd == "SAVE")
                 {
                     if (root == null)
@@ -119,7 +115,6 @@ namespace Crawler
                     Console.WriteLine("💾 Записано!");
                 }
 
-                // LOADA archive
                 else if (cmd == "LOADA")
                 {
                     if (argument == "")
@@ -139,7 +134,6 @@ namespace Crawler
 
                 }
 
-                // PRINT, PRINTP, SET, COPY
                 else if (cmd == "PRINT" || cmd == "PRINTP" || cmd == "SET" || cmd == "COPY")
                 {
                     if (root == null)
@@ -154,9 +148,6 @@ namespace Crawler
                         continue;
                     }
 
-                    // -------------------------
-                    // COPY <src> <dst>
-                    // -------------------------
                     if (cmd == "COPY")
                     {
                         string src = "";
@@ -205,9 +196,6 @@ namespace Crawler
                         continue;
                     }
 
-                    // -------------------------
-                    // PRINT / PRINTP / SET
-                    // -------------------------
                     string path = "";
                     string value = "";
                     bool foundQuotes = false;
@@ -238,7 +226,6 @@ namespace Crawler
 
                     path = ManualTrim(path);
 
-                    // PRINT normal
                     if (cmd == "PRINT")
                     {
                         PathSearcher searcher = new PathSearcher();
@@ -252,7 +239,6 @@ namespace Crawler
                         Console.WriteLine("⏱ " + sw.ElapsedMilliseconds + " ms");
                     }
 
-                    // PRINT parallel
                     else if (cmd == "PRINTP")
                     {
                         PathSearcherParallel searcherP = new PathSearcherParallel();
@@ -266,7 +252,6 @@ namespace Crawler
                         Console.WriteLine("⚡ " + sw.ElapsedMilliseconds + " ms");
                     }
 
-                    // SET
                     else if (cmd == "SET")
                     {
                         if (value == "")
@@ -331,7 +316,6 @@ namespace Crawler
                     }
                 }
 
-                // VISUALIZE
                 else if (cmd == "VISUALIZE")
                 {
                     if (root == null)
@@ -351,9 +335,6 @@ namespace Crawler
             }
         }
 
-        // =====================================================================
-        // HELPERS
-        // =====================================================================
 
         static void PrintFoundNodes(MyList<HtmlNode> found)
         {
@@ -401,76 +382,6 @@ namespace Crawler
                 res += s[i];
 
             return res;
-        }
-
-        static string Compress(string input)
-        {
-            if (input == "" || input == null) return "";
-
-            StringBuilder sb = new StringBuilder();
-            char prev = input[0];
-            int count = 1;
-
-            for (int i = 1; i < input.Length; i++)
-            {
-                if (input[i] == prev)
-                    count++;
-                else
-                {
-                    sb.Append(prev);
-                    if (count > 1) sb.Append(count);
-                    prev = input[i];
-                    count = 1;
-                }
-            }
-
-            sb.Append(prev);
-            if (count > 1) sb.Append(count);
-
-            return sb.ToString();
-        }
-
-        static string Decompress(string input)
-        {
-            if (input == "" || input == null) return "";
-
-            StringBuilder sb = new StringBuilder();
-            char cur = '\0';
-            string number = "";
-
-            for (int i = 0; i < input.Length; i++)
-            {
-                char c = input[i];
-
-                if (c >= '0' && c <= '9')
-                {
-                    number += c;
-                }
-                else
-                {
-                    if (cur != '\0')
-                    {
-                        int count = 1;
-                        if (number != "") int.TryParse(number, out count);
-
-                        for (int j = 0; j < count; j++)
-                            sb.Append(cur);
-                    }
-
-                    cur = c;
-                    number = "";
-                }
-            }
-
-            if (cur != '\0')
-            {
-                int count = 1;
-                if (number != "") int.TryParse(number, out count);
-                for (int j = 0; j < count; j++)
-                    sb.Append(cur);
-            }
-
-            return sb.ToString();
         }
     }
 }

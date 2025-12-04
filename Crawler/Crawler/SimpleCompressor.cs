@@ -1,51 +1,21 @@
 ﻿using System;
-// НЕ СЕ ИЗПОЛЗВАТ: System.Text, System.IO, System.Linq
 
 namespace Crawler
 {
     public static class SimpleCompressor
     {
-        // ====================================================================
-        // I. Ръчни Помощни Функции
-        // ====================================================================
-
-        private static bool IsHtmlSymbol(char c)
+        private static bool IsHtmlChar(char c)
         {
-            return c == '<' || c == '>' || c == '&' || c == ';';
+            return c == '<' || c == '>' || c == '"' || c == '\'' || c == '=' || c == '/';
         }
 
-        private static string IntToString(int value)
+        // =====================================================================
+        //                    COMPRESS — серии ≥ 5
+        // =====================================================================
+        public static string Compress(string input)
         {
-            if (value == 0) return "0";
-
-            string result = "";
-            int temp = value;
-            int digit;
-
-            while (temp > 0)
-            {
-                digit = temp % 10;
-                char c = (char)('0' + digit);
-
-                result = c + result;
-
-                temp /= 10;
-            }
-
-            return result;
-        }
-
-
-        // ====================================================================
-        // II. Алгоритми за RLE (Total Count N)
-        // ====================================================================
-
-        /// <summary>
-        /// Ръчна RLE компресия: Символ + Общ Брой Повторения (N). 
-        /// </summary>
-        private static string CompressText(string input)
-        {
-            if (input == null || input.Length == 0) return "";
+            if (string.IsNullOrEmpty(input))
+                return "";
 
             string result = "";
             int i = 0;
@@ -54,31 +24,33 @@ namespace Crawler
             {
                 char c = input[i];
 
-                // HTML символи И ЦИФРИ се записват директно.
-                if (IsHtmlSymbol(c) || (c >= '0' && c <= '9'))
+                // НИКГА не компресираме HTML-символи
+                if (IsHtmlChar(c))
                 {
                     result += c;
                     i++;
                     continue;
                 }
 
-                // RLE логика:
+                // Търсим поредица
                 int count = 1;
                 int j = i + 1;
-
                 while (j < input.Length && input[j] == c)
                 {
                     count++;
                     j++;
                 }
 
-                // 1. Добавяме символа
-                result += c;
-
-                if (count > 1)
+                // Ако серията е >= 5 → RLE
+                if (count >= 5)
                 {
-                    // 2. Добавяме ОБЩИЯ брой повторения (N)
-                    result += IntToString(count);
+                    result += c + count.ToString();
+                }
+                else
+                {
+                    // Иначе — текстът се копира 1 към 1
+                    for (int k = 0; k < count; k++)
+                        result += c;
                 }
 
                 i = j;
@@ -87,75 +59,90 @@ namespace Crawler
             return result;
         }
 
-        /// <summary>
-        /// Ръчна RLE декомпресия (Total Count N).
-        /// </summary>
-        private static string DecompressText(string input)
+        // =====================================================================
+        //                    DECOMPRESS — само ако има серия ≥ 5
+        // =====================================================================
+        public static string Decompress(string input)
         {
-            if (input == null || input.Length == 0) return "";
+            if (string.IsNullOrEmpty(input))
+                return "";
 
             string result = "";
+            int i = 0;
 
-            for (int i = 0; i < input.Length; i++)
+            while (i < input.Length)
             {
                 char c = input[i];
 
-                // HTML символи И ЦИФРИ се добавят директно.
-                if (IsHtmlSymbol(c) || (c >= '0' && c <= '9'))
+                // HTML символи → директно
+                if (IsHtmlChar(c))
                 {
                     result += c;
+                    i++;
                     continue;
                 }
 
-                // 1. Намиране на брояч на ОБЩИЯ брой повторения (N_total)
-                int k = i + 1;
-                string countStr = "";
-                while (k < input.Length && input[k] >= '0' && input[k] <= '9')
-                {
-                    countStr += input[k];
-                    k++;
-                }
+                // Ако следва цифра → може да е RLE, но трябва да проверим дали е серия >=5
+                int j = i + 1;
 
-                if (countStr.Length > 0)
+                if (j < input.Length && char.IsDigit(input[j]))
                 {
-                    // 2. Ръчно парсване на N_total
-                    int N_total = 0;
-                    int powerOf10 = 1;
-                    for (int j = countStr.Length - 1; j >= 0; j--)
+                    // прочитаме числото
+                    string number = "";
+                    while (j < input.Length && char.IsDigit(input[j]))
                     {
-                        N_total += (countStr[j] - '0') * powerOf10;
-                        powerOf10 *= 10;
+                        number += input[j];
+                        j++;
                     }
 
-                    // 3. Добавяне на символа N_total пъти. (Това е най-чистата логика!)
-                    for (int j = 0; j < N_total; j++)
-                        result += c;
+                    int count = int.Parse(number);
 
-                    // 4. Преместване на индекса i, за да прескочим брояча
-                    i = k - 1;
+                    if (count >= 5)
+                    {
+                        // истински RLE
+                        for (int k = 0; k < count; k++)
+                            result += c;
+
+                        i = j;
+                        continue;
+                    }
+                    else
+                    {
+                        // ❗ НЕ Е RLE → това е нормален текст като "Text2"
+                        // връщаме оригиналния символ и числото
+                        result += c;
+                        result += number;
+                        i = j;
+                        continue;
+                    }
                 }
-                else
-                {
-                    // N = 1 случай: Няма брояч, добавяме символа веднъж
-                    result += c;
-                }
+
+                // нормален символ
+                result += c;
+                i++;
             }
 
             return result;
         }
-
-        // ====================================================================
-        // III. ПУБЛИЧНИ МЕТОДИ
-        // ====================================================================
-
-        public static string Compress(string input)
+        private static string CleanText(string s)
         {
-            return CompressText(input);
+            if (string.IsNullOrEmpty(s)) return "";
+
+            string r = "";
+            for (int i = 0; i < s.Length; i++)
+            {
+                char c = s[i];
+
+                // премахваме whitespace: space, tab, newline, CR
+                if (c == ' ' || c == '\t' || c == '\n' || c == '\r')
+                    continue;
+
+                r += c;
+            }
+
+            return r;
         }
 
-        public static string Decompress(string input)
-        {
-            return DecompressText(input);
-        }
     }
+
 }

@@ -19,26 +19,19 @@ namespace Crawler
             TagName = tag;
             IsSelfClosing = selfClosing;
             InnerText = "";
-            Attributes = new AttributeList();   
+            Attributes = new AttributeList();
         }
 
         private string ManualTrim(string s)
         {
             if (s == null) return "";
-
             int start = 0;
             int end = s.Length - 1;
 
-            while (start <= end &&
-                  (s[start] == ' ' || s[start] == '\t' || s[start] == '\r' || s[start] == '\n'))
-                start++;
-
-            while (end >= start &&
-                  (s[end] == ' ' || s[end] == '\t' || s[end] == '\r' || s[end] == '\n'))
-                end--;
+            while (start <= end && (s[start] <= ' ')) start++;
+            while (end >= start && (s[end] <= ' ')) end--;
 
             if (end < start) return "";
-
             char[] arr = new char[end - start + 1];
             int p = 0;
             for (int i = start; i <= end; i++)
@@ -51,11 +44,8 @@ namespace Crawler
         {
             if (s == null) return true;
             for (int i = 0; i < s.Length; i++)
-            {
-                char c = s[i];
-                if (c != ' ' && c != '\t' && c != '\r' && c != '\n')
-                    return false;
-            }
+                if (s[i] > ' ') return false;
+
             return true;
         }
 
@@ -68,7 +58,6 @@ namespace Crawler
                 HtmlNode cur = FirstChild;
                 while (cur.NextSibling != null)
                     cur = cur.NextSibling;
-
                 cur.NextSibling = child;
             }
 
@@ -87,21 +76,16 @@ namespace Crawler
 
             Console.Write("<" + TagName);
 
-            HtmlAttribute curAttr = Attributes.Head;
-            if (curAttr != null)
+            HtmlAttribute a = Attributes.Head;
+            while (a != null)
             {
-                Console.Write(" [");
-                while (curAttr != null)
-                {
-                    Console.Write($"{curAttr.Name}='{curAttr.Value}' ");
-                    curAttr = curAttr.Next;
-                }
-                Console.Write("]");
+                Console.Write($" {a.Name}='{a.Value}'");
+                a = a.Next;
             }
 
             if (IsSelfClosing)
             {
-                Console.WriteLine(" (self-closing)>");
+                Console.WriteLine("/>");
                 return;
             }
 
@@ -111,7 +95,7 @@ namespace Crawler
             {
                 for (int i = 0; i < indent + 1; i++)
                     Console.Write("  ");
-                Console.WriteLine("Text: " + ManualTrim(InnerText));
+                Console.WriteLine(ManualTrim(InnerText));
             }
 
             HtmlNode child = FirstChild;
@@ -128,10 +112,12 @@ namespace Crawler
 
         public string ToHtmlString()
         {
-            if (IsSelfClosing)
-                return "<" + TagName + MakeAttrString() + " />";
+            string html = "<" + TagName + MakeAttrString();
 
-            string html = "<" + TagName + MakeAttrString() + ">";
+            if (IsSelfClosing)
+                return html + " />";
+
+            html += ">";
 
             if (!IsWhitespace(InnerText))
                 html += ManualTrim(InnerText);
@@ -144,15 +130,12 @@ namespace Crawler
             }
 
             html += "</" + TagName + ">";
-
             return html;
         }
 
         private string MakeAttrString()
         {
             HtmlAttribute a = Attributes.Head;
-            if (a == null) return "";
-
             string s = "";
             while (a != null)
             {
@@ -166,10 +149,13 @@ namespace Crawler
         {
             HtmlNode c = new HtmlNode(this.TagName, this.IsSelfClosing);
             c.InnerText = this.InnerText;
-
-            c.Attributes = this.Attributes;
-
-            c.FirstChild = this.FirstChild;
+            
+            HtmlAttribute a = this.Attributes.Head;
+            while (a != null)
+            {
+                c.Attributes.Add(a.Name, a.Value);
+                a = a.Next;
+            }
 
             return c;
         }
