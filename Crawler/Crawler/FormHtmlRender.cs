@@ -27,33 +27,28 @@ namespace Crawler
             DrawNode(e.Graphics, root, 20, ref y);
         }
 
-        // ================== РЕНДЕР =====================
-
         private void DrawNode(Graphics g, HtmlNode node, int x, ref int y)
         {
             if (node == null) return;
 
-            // -------- TABLE --------
             if (EqualsIgnoreCase(node.TagName, "table"))
             {
                 DrawTable(g, node, x, ref y);
                 return;
             }
 
-            // -------- IMAGE --------
             if (EqualsIgnoreCase(node.TagName, "img"))
             {
                 DrawImage(g, node, x, ref y);
                 return;
             }
 
-            // -------- LINK --------
             if (EqualsIgnoreCase(node.TagName, "a"))
             {
                 DrawLink(g, node, x, ref y);
+                return;    
             }
 
-            // -------- TEXT --------
             if (!string.IsNullOrWhiteSpace(node.InnerText))
             {
                 string text = node.InnerText.Trim();
@@ -62,7 +57,6 @@ namespace Crawler
                 y += (int)sz.Height + 5;
             }
 
-            // -------- CHILDREN --------
             HtmlNode child = node.FirstChild;
             while (child != null)
             {
@@ -70,8 +64,6 @@ namespace Crawler
                 child = child.NextSibling;
             }
         }
-
-        // ================== TABLE =====================
 
         private void DrawTable(Graphics g, HtmlNode table, int x, ref int y)
         {
@@ -125,8 +117,6 @@ namespace Crawler
             return max;
         }
 
-        // ================== IMAGE =====================
-
         private void DrawImage(Graphics g, HtmlNode node, int x, ref int y)
         {
             string src = node.GetAttribute("src");
@@ -142,8 +132,6 @@ namespace Crawler
                 y += bmp.Height + 10;
             }
         }
-
-        // ================== LINK =====================
 
         private void DrawLink(Graphics g, HtmlNode node, int x, ref int y)
         {

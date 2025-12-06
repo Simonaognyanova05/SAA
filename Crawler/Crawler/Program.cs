@@ -65,7 +65,7 @@ namespace Crawler
 
                     if (!File.Exists(path))
                     {
-                        Console.WriteLine("❌ Файлът не е намерен!");
+                        Console.WriteLine("Файлът не е намерен!");
                         continue;
                     }
 
@@ -73,11 +73,11 @@ namespace Crawler
                     {
                         string html = File.ReadAllText(path);
                         root = parser.Parse(html);
-                        Console.WriteLine("✅ HTML зареден!");
+                        Console.WriteLine("HTML зареден!");
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine("❌ Грешка при парсване:");
+                        Console.WriteLine("Грешка при парсване:");
                         Console.WriteLine(ex.Message);
                     }
                 }
@@ -86,7 +86,7 @@ namespace Crawler
                 {
                     if (root == null)
                     {
-                        Console.WriteLine("❗ Няма зареден документ!");
+                        Console.WriteLine("Няма зареден документ!");
                         continue;
                     }
 
@@ -97,40 +97,40 @@ namespace Crawler
                 {
                     if (root == null)
                     {
-                        Console.WriteLine("❗ Няма зареден документ!");
+                        Console.WriteLine("Няма зареден документ!");
                         continue;
                     }
 
                     if (argument == "")
                     {
-                        Console.WriteLine("❗ Формат: SAVE <файл>");
+                        Console.WriteLine("Формат: SAVE <файл>");
                         continue;
                     }
 
                     SimpleArchive.Save(argument, root);
-                    Console.WriteLine("💾 Архивът е записа̀н!");
+                    Console.WriteLine("Архивът е записа̀н!");
 
 
 
-                    Console.WriteLine("💾 Записано!");
+                    Console.WriteLine("Записано!");
                 }
 
                 else if (cmd == "LOADA")
                 {
                     if (argument == "")
                     {
-                        Console.WriteLine("❗ Формат: LOADA <файл>");
+                        Console.WriteLine("Формат: LOADA <файл>");
                         continue;
                     }
 
                     if (!File.Exists(argument))
                     {
-                        Console.WriteLine("❌ Архивът не е намерен!");
+                        Console.WriteLine("Архивът не е намерен!");
                         continue;
                     }
 
                     root = SimpleArchive.Load(argument);
-                    Console.WriteLine("📂 Архивът е зареден!");
+                    Console.WriteLine("Архивът е зареден!");
 
                 }
 
@@ -138,13 +138,13 @@ namespace Crawler
                 {
                     if (root == null)
                     {
-                        Console.WriteLine("❗ Няма зареден документ!");
+                        Console.WriteLine("Няма зареден документ!");
                         continue;
                     }
 
                     if (argument == "")
                     {
-                        Console.WriteLine("❗ Липсват аргументи!");
+                        Console.WriteLine("Липсват аргументи!");
                         continue;
                     }
 
@@ -176,7 +176,7 @@ namespace Crawler
 
                         if (sources.Count == 0 || targets.Count == 0)
                         {
-                            Console.WriteLine("⚠ Няма възли за копиране.");
+                            Console.WriteLine("Няма възли за копиране.");
                             continue;
                         }
 
@@ -192,7 +192,7 @@ namespace Crawler
                             }
                         }
 
-                        Console.WriteLine("✔ Копирани: " + copies);
+                        Console.WriteLine("Копирани: " + copies);
                         continue;
                     }
 
@@ -236,7 +236,7 @@ namespace Crawler
                         sw.Stop();
 
                         PrintFoundNodes(found);
-                        Console.WriteLine("⏱ " + sw.ElapsedMilliseconds + " ms");
+                        Console.WriteLine(sw.ElapsedMilliseconds + " ms");
                     }
 
                     else if (cmd == "PRINTP")
@@ -249,14 +249,14 @@ namespace Crawler
                         sw.Stop();
 
                         PrintFoundNodes(found);
-                        Console.WriteLine("⚡ " + sw.ElapsedMilliseconds + " ms");
+                        Console.WriteLine(sw.ElapsedMilliseconds + " ms");
                     }
 
                     else if (cmd == "SET")
                     {
                         if (value == "")
                         {
-                            Console.WriteLine("❗ Формат: SET <път> \"<текст>\"");
+                            Console.WriteLine("Формат: SET <път> \"<текст>\"");
                             continue;
                         }
 
@@ -265,7 +265,7 @@ namespace Crawler
 
                         if (nodes.Count == 0)
                         {
-                            Console.WriteLine("⚠ Няма намерени възли.");
+                            Console.WriteLine("Няма намерени възли.");
                             continue;
                         }
 
@@ -307,12 +307,12 @@ namespace Crawler
                                 }
                                 catch
                                 {
-                                    Console.WriteLine("⚠ Грешка в SET HTML.");
+                                    Console.WriteLine("Грешка в SET HTML.");
                                 }
                             }
                         }
 
-                        Console.WriteLine("✔ Променени: " + changed);
+                        Console.WriteLine("Променени: " + changed);
                     }
                 }
 
@@ -320,7 +320,7 @@ namespace Crawler
                 {
                     if (root == null)
                     {
-                        Console.WriteLine("❗ Няма зареден документ!");
+                        Console.WriteLine("Няма зареден документ!");
                         continue;
                     }
 
@@ -330,7 +330,7 @@ namespace Crawler
 
                 else
                 {
-                    Console.WriteLine("❓ Непозната команда!");
+                    Console.WriteLine("Непозната команда!");
                 }
             }
         }
@@ -340,11 +340,11 @@ namespace Crawler
         {
             if (found.Count == 0)
             {
-                Console.WriteLine("⚠ Няма намерени.");
+                Console.WriteLine("Няма намерени.");
                 return;
             }
 
-            Console.WriteLine("✔ Намерени: " + found.Count);
+            Console.WriteLine("Намерени: " + found.Count);
 
             for (int i = 0; i < found.Count; i++)
             {
