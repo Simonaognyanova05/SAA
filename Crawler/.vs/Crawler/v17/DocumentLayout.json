@@ -3,47 +3,47 @@
   "WorkspaceRootPath": "C:\\Users\\simon\\OneDrive\\Desktop\\SAA\\Crawler\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{DF1F9402-F876-4C88-82D7-3AF99EEE1581}|Crawler\\Crawler.csproj|C:\\Users\\simon\\OneDrive\\Desktop\\SAA\\Crawler\\crawler\\simplecompressor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{DF1F9402-F876-4C88-82D7-3AF99EEE1581}|Crawler\\Crawler.csproj|solutionrelative:crawler\\simplecompressor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{DF1F9402-F876-4C88-82D7-3AF99EEE1581}|Crawler\\Crawler.csproj|c:\\users\\simon\\onedrive\\desktop\\saa\\crawler\\crawler\\simplearchive.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{DF1F9402-F876-4C88-82D7-3AF99EEE1581}|Crawler\\Crawler.csproj|solutionrelative:crawler\\simplearchive.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{DF1F9402-F876-4C88-82D7-3AF99EEE1581}|Crawler\\Crawler.csproj|C:\\Users\\simon\\OneDrive\\Desktop\\SAA\\Crawler\\crawler\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{DF1F9402-F876-4C88-82D7-3AF99EEE1581}|Crawler\\Crawler.csproj|solutionrelative:crawler\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{DF1F9402-F876-4C88-82D7-3AF99EEE1581}|Crawler\\Crawler.csproj|C:\\Users\\simon\\OneDrive\\Desktop\\SAA\\Crawler\\crawler\\pathsearcherparallel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{DF1F9402-F876-4C88-82D7-3AF99EEE1581}|Crawler\\Crawler.csproj|solutionrelative:crawler\\pathsearcherparallel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{DF1F9402-F876-4C88-82D7-3AF99EEE1581}|Crawler\\Crawler.csproj|C:\\Users\\simon\\OneDrive\\Desktop\\SAA\\Crawler\\crawler\\pathsearcher.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{DF1F9402-F876-4C88-82D7-3AF99EEE1581}|Crawler\\Crawler.csproj|solutionrelative:crawler\\pathsearcher.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{DF1F9402-F876-4C88-82D7-3AF99EEE1581}|Crawler\\Crawler.csproj|C:\\Users\\simon\\OneDrive\\Desktop\\SAA\\Crawler\\crawler\\mylist.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DF1F9402-F876-4C88-82D7-3AF99EEE1581}|Crawler\\Crawler.csproj|solutionrelative:crawler\\mylist.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{DF1F9402-F876-4C88-82D7-3AF99EEE1581}|Crawler\\Crawler.csproj|C:\\Users\\simon\\OneDrive\\Desktop\\SAA\\Crawler\\crawler\\mystack.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{DF1F9402-F876-4C88-82D7-3AF99EEE1581}|Crawler\\Crawler.csproj|solutionrelative:crawler\\mystack.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{DF1F9402-F876-4C88-82D7-3AF99EEE1581}|Crawler\\Crawler.csproj|C:\\Users\\simon\\OneDrive\\Desktop\\SAA\\Crawler\\crawler\\mylist.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{DF1F9402-F876-4C88-82D7-3AF99EEE1581}|Crawler\\Crawler.csproj|solutionrelative:crawler\\mylist.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{DF1F9402-F876-4C88-82D7-3AF99EEE1581}|Crawler\\Crawler.csproj|C:\\Users\\simon\\OneDrive\\Desktop\\SAA\\Crawler\\crawler\\htmlparser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{DF1F9402-F876-4C88-82D7-3AF99EEE1581}|Crawler\\Crawler.csproj|solutionrelative:crawler\\htmlparser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DF1F9402-F876-4C88-82D7-3AF99EEE1581}|Crawler\\Crawler.csproj|C:\\Users\\simon\\OneDrive\\Desktop\\SAA\\Crawler\\crawler\\pathsearcher.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DF1F9402-F876-4C88-82D7-3AF99EEE1581}|Crawler\\Crawler.csproj|solutionrelative:crawler\\pathsearcher.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DF1F9402-F876-4C88-82D7-3AF99EEE1581}|Crawler\\Crawler.csproj|C:\\Users\\simon\\OneDrive\\Desktop\\SAA\\Crawler\\crawler\\pathsearcherparallel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DF1F9402-F876-4C88-82D7-3AF99EEE1581}|Crawler\\Crawler.csproj|solutionrelative:crawler\\pathsearcherparallel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DF1F9402-F876-4C88-82D7-3AF99EEE1581}|Crawler\\Crawler.csproj|C:\\Users\\simon\\OneDrive\\Desktop\\SAA\\Crawler\\crawler\\simplearchive.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DF1F9402-F876-4C88-82D7-3AF99EEE1581}|Crawler\\Crawler.csproj|solutionrelative:crawler\\simplearchive.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DF1F9402-F876-4C88-82D7-3AF99EEE1581}|Crawler\\Crawler.csproj|c:\\users\\simon\\onedrive\\desktop\\saa\\crawler\\crawler\\simplecompressor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DF1F9402-F876-4C88-82D7-3AF99EEE1581}|Crawler\\Crawler.csproj|solutionrelative:crawler\\simplecompressor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DF1F9402-F876-4C88-82D7-3AF99EEE1581}|Crawler\\Crawler.csproj|C:\\Users\\simon\\OneDrive\\Desktop\\SAA\\Crawler\\crawler\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DF1F9402-F876-4C88-82D7-3AF99EEE1581}|Crawler\\Crawler.csproj|solutionrelative:crawler\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{DF1F9402-F876-4C88-82D7-3AF99EEE1581}|Crawler\\Crawler.csproj|C:\\Users\\simon\\OneDrive\\Desktop\\SAA\\Crawler\\crawler\\htmlnode.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{DF1F9402-F876-4C88-82D7-3AF99EEE1581}|Crawler\\Crawler.csproj|solutionrelative:crawler\\htmlnode.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{DF1F9402-F876-4C88-82D7-3AF99EEE1581}|Crawler\\Crawler.csproj|c:\\users\\simon\\onedrive\\desktop\\saa\\crawler\\crawler\\formhtmlrender.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{DF1F9402-F876-4C88-82D7-3AF99EEE1581}|Crawler\\Crawler.csproj|C:\\Users\\simon\\OneDrive\\Desktop\\SAA\\Crawler\\crawler\\formhtmlrender.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{DF1F9402-F876-4C88-82D7-3AF99EEE1581}|Crawler\\Crawler.csproj|solutionrelative:crawler\\formhtmlrender.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{DF1F9402-F876-4C88-82D7-3AF99EEE1581}|Crawler\\Crawler.csproj|c:\\users\\simon\\onedrive\\desktop\\saa\\crawler\\crawler\\formhtmlrender.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "AbsoluteMoniker": "D:0:0:{DF1F9402-F876-4C88-82D7-3AF99EEE1581}|Crawler\\Crawler.csproj|C:\\Users\\simon\\OneDrive\\Desktop\\SAA\\Crawler\\crawler\\formhtmlrender.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
       "RelativeMoniker": "D:0:0:{DF1F9402-F876-4C88-82D7-3AF99EEE1581}|Crawler\\Crawler.csproj|solutionrelative:crawler\\formhtmlrender.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
@@ -58,7 +58,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 11,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Document",
@@ -70,8 +70,7 @@
               "RelativeToolTip": "Crawler\\FormHtmlRender.cs",
               "ViewState": "AgIAAJAAAAAAAAAAAAAAAIUAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-06T11:06:39.519Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-06T11:06:39.519Z"
             },
             {
               "$type": "Document",
@@ -82,8 +81,7 @@
               "ToolTip": "C:\\Users\\simon\\OneDrive\\Desktop\\SAA\\Crawler\\Crawler\\FormHtmlRender.cs [Design]",
               "RelativeToolTip": "Crawler\\FormHtmlRender.cs [Design]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-06T11:06:37.343Z",
-              "EditorCaption": " [Design]"
+              "WhenOpened": "2025-12-06T11:06:37.343Z"
             },
             {
               "$type": "Document",
@@ -95,70 +93,69 @@
               "RelativeToolTip": "Crawler\\AttributeList.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAEMAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-04T10:59:20.288Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-04T10:59:20.288Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 2,
               "Title": "HtmlParser.cs",
               "DocumentMoniker": "C:\\Users\\simon\\OneDrive\\Desktop\\SAA\\Crawler\\Crawler\\HtmlParser.cs",
               "RelativeDocumentMoniker": "Crawler\\HtmlParser.cs",
               "ToolTip": "C:\\Users\\simon\\OneDrive\\Desktop\\SAA\\Crawler\\Crawler\\HtmlParser.cs",
               "RelativeToolTip": "Crawler\\HtmlParser.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-12-04T10:56:21.72Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 0,
               "Title": "MyList.cs",
               "DocumentMoniker": "C:\\Users\\simon\\OneDrive\\Desktop\\SAA\\Crawler\\Crawler\\MyList.cs",
               "RelativeDocumentMoniker": "Crawler\\MyList.cs",
               "ToolTip": "C:\\Users\\simon\\OneDrive\\Desktop\\SAA\\Crawler\\Crawler\\MyList.cs",
               "RelativeToolTip": "Crawler\\MyList.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAbAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-12-04T10:56:17.393Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 1,
               "Title": "MyStack.cs",
               "DocumentMoniker": "C:\\Users\\simon\\OneDrive\\Desktop\\SAA\\Crawler\\Crawler\\MyStack.cs",
               "RelativeDocumentMoniker": "Crawler\\MyStack.cs",
               "ToolTip": "C:\\Users\\simon\\OneDrive\\Desktop\\SAA\\Crawler\\Crawler\\MyStack.cs",
               "RelativeToolTip": "Crawler\\MyStack.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAABYAAAAAAAAAAAAowC4AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-12-04T10:56:13.67Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 3,
               "Title": "PathSearcher.cs",
               "DocumentMoniker": "C:\\Users\\simon\\OneDrive\\Desktop\\SAA\\Crawler\\Crawler\\PathSearcher.cs",
               "RelativeDocumentMoniker": "Crawler\\PathSearcher.cs",
               "ToolTip": "C:\\Users\\simon\\OneDrive\\Desktop\\SAA\\Crawler\\Crawler\\PathSearcher.cs",
               "RelativeToolTip": "Crawler\\PathSearcher.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAL4AAAAAAAAAAAAwwNgAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-12-04T10:56:07.373Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "PathSearcherParallel.cs",
               "DocumentMoniker": "C:\\Users\\simon\\OneDrive\\Desktop\\SAA\\Crawler\\Crawler\\PathSearcherParallel.cs",
               "RelativeDocumentMoniker": "Crawler\\PathSearcherParallel.cs",
               "ToolTip": "C:\\Users\\simon\\OneDrive\\Desktop\\SAA\\Crawler\\Crawler\\PathSearcherParallel.cs",
               "RelativeToolTip": "Crawler\\PathSearcherParallel.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAOEAAAAAAAAAAAAwwPsAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-12-04T10:56:00.632Z",
               "EditorCaption": ""
@@ -173,25 +170,24 @@
               "RelativeToolTip": "Crawler\\HtmlNode.cs",
               "ViewState": "AgIAALQAAAAAAAAAAAAAAFsAAAAjAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-04T10:32:32.801Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-04T10:32:32.801Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 5,
               "Title": "SimpleArchive.cs",
               "DocumentMoniker": "C:\\Users\\simon\\OneDrive\\Desktop\\SAA\\Crawler\\Crawler\\SimpleArchive.cs",
               "RelativeDocumentMoniker": "Crawler\\SimpleArchive.cs",
               "ToolTip": "C:\\Users\\simon\\OneDrive\\Desktop\\SAA\\Crawler\\Crawler\\SimpleArchive.cs",
               "RelativeToolTip": "Crawler\\SimpleArchive.cs",
-              "ViewState": "AgIAABUBAAAAAAAAAAAAACABAAAYAAAAAAAAAA==",
+              "ViewState": "AgIAAAkBAAAAAAAAAAAwwCMBAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-12-03T13:52:09.616Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 7,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\simon\\OneDrive\\Desktop\\SAA\\Crawler\\Crawler\\Program.cs",
               "RelativeDocumentMoniker": "Crawler\\Program.cs",
@@ -199,18 +195,17 @@
               "RelativeToolTip": "Crawler\\Program.cs",
               "ViewState": "AgIAAGkBAAAAAAAAAAAwwIMBAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-03T13:52:09.928Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-03T13:52:09.928Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 6,
               "Title": "SimpleCompressor.cs",
               "DocumentMoniker": "C:\\Users\\simon\\OneDrive\\Desktop\\SAA\\Crawler\\Crawler\\SimpleCompressor.cs",
               "RelativeDocumentMoniker": "Crawler\\SimpleCompressor.cs",
               "ToolTip": "C:\\Users\\simon\\OneDrive\\Desktop\\SAA\\Crawler\\Crawler\\SimpleCompressor.cs",
               "RelativeToolTip": "Crawler\\SimpleCompressor.cs",
-              "ViewState": "AgIAAA0AAAAAAAAAAAAAABYAAAANAAAAAAAAAA==",
+              "ViewState": "AgIAAI0AAAAAAAAAAAAwwKcAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-12-03T13:51:40.155Z",
               "EditorCaption": ""
