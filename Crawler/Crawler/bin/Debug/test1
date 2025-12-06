@@ -1,0 +1,6 @@
+﻿[SAA]
+[HTML_SIZE]
+322
+[HTML_COMPRESSED]
+<root><html><body><p>Text1</p><p>Text2</p><p id='p3'>Text3</p><div><div>Text4</div><p>Text5</p></div><table><tr><td>11</td></tr><tr><td>22</td></tr></table><table id='table2'><tr><td>33</td></tr><tr><td>44</td></tr></table><a href='http://https://www.w3schools.com'>w3schools</a><img src='test.bmp' /></body></html></root>
+[END]
