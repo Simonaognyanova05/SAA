@@ -183,7 +183,7 @@ namespace Crawler
                         int copies = 0;
                         for (int i2 = 0; i2 < sources.Count; i2++)
                         {
-                            HtmlNode cp = sources[i2].ShallowCopy();
+                            HtmlNode cp = sources[i2].DeepCopy();
 
                             for (int j2 = 0; j2 < targets.Count; j2++)
                             {

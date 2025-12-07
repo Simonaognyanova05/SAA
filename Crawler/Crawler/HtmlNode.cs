@@ -115,7 +115,7 @@ namespace Crawler
             string html = "<" + TagName + MakeAttrString();
 
             if (IsSelfClosing)
-                return html + " />";
+                return html + "/>";
 
             html += ">";
 
