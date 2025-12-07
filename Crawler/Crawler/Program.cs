@@ -236,7 +236,6 @@ namespace Crawler
                         sw.Stop();
 
                         PrintFoundNodes(found);
-                        Console.WriteLine(sw.ElapsedMilliseconds + " ms");
                     }
 
                     else if (cmd == "PRINTP")
