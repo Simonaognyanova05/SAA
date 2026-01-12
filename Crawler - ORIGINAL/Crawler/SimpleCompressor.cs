@@ -10,7 +10,7 @@ namespace Crawler
             return c == '<' || c == '>' || c == '"' || c == '\'' || c == '=' || c == '/';
         }
 
-        private const char Marker = '~';
+        private const char Marker = '~'; 
 
         public static string Compress(string input)
         {
@@ -20,9 +20,9 @@ namespace Crawler
             StringBuilder sb = new StringBuilder();
             int i = 0;
             while (i < input.Length)
-            {
+            { 
                 char c = input[i];
-
+                
                 if (c == Marker)
                 {
                     sb.Append(Marker); 
@@ -34,10 +34,10 @@ namespace Crawler
                 if (IsHtmlChar(c))
                 {
                     sb.Append(c);
-                    i++;
-                    continue;
+                    i++; 
+                    continue; 
                 }
-
+                
                 int j = i + 1;
                 while (j < input.Length && input[j] == c)
                 {
@@ -46,12 +46,12 @@ namespace Crawler
                 }
                 int count = j - i;
 
-                if (count >= 5)
+                if (count >= 5) 
                 {
                     sb.Append(Marker);          
                     sb.Append(c);               
                     sb.Append(ManualIntToString(count)); 
-                }
+                }  
                 else
                 {
                     for (int k = 0; k < count; k++)
@@ -73,7 +73,7 @@ namespace Crawler
             int i = 0;
             while (i < input.Length)
             {
-                char c = input[i];
+                char c = input[i]; 
 
                 if (c == Marker)
                 {
@@ -83,7 +83,7 @@ namespace Crawler
                         i += 2;
                         continue;
                     }
-
+                   
                     if (i + 1 >= input.Length)
                     {
                         sb.Append(Marker);

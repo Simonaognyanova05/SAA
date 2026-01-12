@@ -76,7 +76,7 @@ namespace Crawler
             string html = SimpleCompressor.Decompress(compressedHtml);
             HtmlParser parser = new HtmlParser();
             HtmlNode root = parser.Parse(html);
-
+           
             HtmlNode currentRoot = root;
             for (int i = 0; i < 2; i++)
             {
@@ -90,7 +90,7 @@ namespace Crawler
                 }
             }
             root = currentRoot;
-
+            
             while (true)
             {
                 SkipNewLines(content, ref pos); 

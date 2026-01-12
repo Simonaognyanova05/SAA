@@ -1,25 +1,9 @@
-C:\Users\simon\source\repos\Crawler\Crawler\bin\Debug\Crawler.exe.config
-C:\Users\simon\source\repos\Crawler\Crawler\bin\Debug\Crawler.exe
-C:\Users\simon\source\repos\Crawler\Crawler\bin\Debug\Crawler.pdb
-C:\Users\simon\source\repos\Crawler\Crawler\obj\Debug\Crawler.csproj.AssemblyReference.cache
-C:\Users\simon\source\repos\Crawler\Crawler\obj\Debug\Crawler.csproj.CoreCompileInputs.cache
-C:\Users\simon\source\repos\Crawler\Crawler\obj\Debug\Crawler.exe
-C:\Users\simon\source\repos\Crawler\Crawler\obj\Debug\Crawler.pdb
-C:\Users\simon\OneDrive\Desktop\SAA\Crawler\Crawler\obj\Debug\Crawler.csproj.AssemblyReference.cache
-C:\Users\simon\OneDrive\Desktop\SAA\Crawler\Crawler\obj\Debug\Crawler.csproj.CoreCompileInputs.cache
-C:\Users\simon\OneDrive\Desktop\SAA\Crawler\Crawler\obj\Debug\Crawler.exe
-C:\Users\simon\OneDrive\Desktop\SAA\Crawler\Crawler\obj\Debug\Crawler.pdb
-C:\Users\simon\OneDrive\Desktop\SAA\Crawler\Crawler\bin\Debug\Crawler.exe.config
-C:\Users\simon\OneDrive\Desktop\SAA\Crawler\Crawler\bin\Debug\Crawler.exe
-C:\Users\simon\OneDrive\Desktop\SAA\Crawler\Crawler\bin\Debug\Crawler.pdb
-C:\Users\simon\OneDrive\Desktop\SAA\Crawler\Crawler\obj\Debug\Crawler.FormHtmlRender.resources
-C:\Users\simon\OneDrive\Desktop\SAA\Crawler\Crawler\obj\Debug\Crawler.csproj.GenerateResource.cache
-C:\Users\simon\OneDrive\Desktop\SAA\Crawler - Copy\Crawler\bin\Debug\Crawler.exe.config
-C:\Users\simon\OneDrive\Desktop\SAA\Crawler - Copy\Crawler\bin\Debug\Crawler.exe
-C:\Users\simon\OneDrive\Desktop\SAA\Crawler - Copy\Crawler\bin\Debug\Crawler.pdb
-C:\Users\simon\OneDrive\Desktop\SAA\Crawler - Copy\Crawler\obj\Debug\Crawler.csproj.AssemblyReference.cache
-C:\Users\simon\OneDrive\Desktop\SAA\Crawler - Copy\Crawler\obj\Debug\Crawler.FormHtmlRender.resources
-C:\Users\simon\OneDrive\Desktop\SAA\Crawler - Copy\Crawler\obj\Debug\Crawler.csproj.GenerateResource.cache
-C:\Users\simon\OneDrive\Desktop\SAA\Crawler - Copy\Crawler\obj\Debug\Crawler.csproj.CoreCompileInputs.cache
-C:\Users\simon\OneDrive\Desktop\SAA\Crawler - Copy\Crawler\obj\Debug\Crawler.exe
-C:\Users\simon\OneDrive\Desktop\SAA\Crawler - Copy\Crawler\obj\Debug\Crawler.pdb
+C:\Users\simon\OneDrive\Desktop\SAA\Crawler - ORIGINAL\Crawler\bin\Debug\Crawler.exe.config
+C:\Users\simon\OneDrive\Desktop\SAA\Crawler - ORIGINAL\Crawler\bin\Debug\Crawler.exe
+C:\Users\simon\OneDrive\Desktop\SAA\Crawler - ORIGINAL\Crawler\bin\Debug\Crawler.pdb
+C:\Users\simon\OneDrive\Desktop\SAA\Crawler - ORIGINAL\Crawler\obj\Debug\Crawler.csproj.AssemblyReference.cache
+C:\Users\simon\OneDrive\Desktop\SAA\Crawler - ORIGINAL\Crawler\obj\Debug\Crawler.FormHtmlRender.resources
+C:\Users\simon\OneDrive\Desktop\SAA\Crawler - ORIGINAL\Crawler\obj\Debug\Crawler.csproj.GenerateResource.cache
+C:\Users\simon\OneDrive\Desktop\SAA\Crawler - ORIGINAL\Crawler\obj\Debug\Crawler.csproj.CoreCompileInputs.cache
+C:\Users\simon\OneDrive\Desktop\SAA\Crawler - ORIGINAL\Crawler\obj\Debug\Crawler.exe
+C:\Users\simon\OneDrive\Desktop\SAA\Crawler - ORIGINAL\Crawler\obj\Debug\Crawler.pdb

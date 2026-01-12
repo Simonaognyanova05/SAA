@@ -14,7 +14,7 @@ namespace Crawler
         }
     }
 
-    public class PathPart
+    public class PathPart 
     {
         public string Text;
         public PathPart Next;

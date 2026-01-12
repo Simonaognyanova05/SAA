@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.InteropServices;
 
 namespace Crawler
 {
@@ -10,13 +11,13 @@ namespace Crawler
 
             if (root == null || path == null)
                 return result;
-
+            
             int start = 0;
-            if (path.Length >= 2 && path[0] == '/' && path[1] == '/')
+            if (path.Length >= 2 && path[0] == '/' && path[1] == '/') 
                 start = 2;
 
             PathPart parts = ParsePath(path, start);
-
+            
             MyList<HtmlNode> current = new MyList<HtmlNode>();
             current.Add(root);
 
@@ -49,7 +50,7 @@ namespace Crawler
             return current;
         }
 
-        private PathPart ParsePath(string path, int start)
+        private PathPart ParsePath(string path, int start) // 
         {
             PathPart head = null;
             PathPart tail = null;
@@ -131,7 +132,7 @@ namespace Crawler
             tag = "";
             attrName = "";
             attrValue = "";
-            index = -1;
+            index = -1; 
 
             int i = 0;
 
